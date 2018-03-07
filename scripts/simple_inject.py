@@ -68,7 +68,7 @@ if __name__ == '__main__':
                         help = 'inject DRAM correctable error (default on)' )
         parser.add_argument( '-u', '--dram-uncorrectable', default = False,
 			action = 'store_true',
-                        help = 'inject DRAM uncorrectable error, non-fatal (default off)' )
+                        help = 'inject DRAM uncorrectable error non-fatal (default off)' )
         parser.add_argument( '-v', '--version', action = 'version', 
                         version = '%(prog)s 1.0' )
 
