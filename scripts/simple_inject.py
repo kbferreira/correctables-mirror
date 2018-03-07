@@ -8,10 +8,6 @@ from subprocess import call
 import sys as sys
 import argparse as ap
 
-log.basicConfig( level = log.DEBUG,
-                format = '%(levelname)s (%(threadName)-9s): %(message)s', 
-                filename = 'correctable.log' )
-
 address = 0x12345000
 
 def setup_config():
@@ -66,6 +62,12 @@ if __name__ == '__main__':
                         version = '%(prog)s 1.0' )
 
         args = parser.parse_args()
+
+	log.basicConfig( level = log.DEBUG,
+                format = '%(levelname)s (%(threadName)-9s): %(message)s', 
+                filename = ( 'correctable_interval-%d_length-%d_time-%f.log' ) % 
+				( args.interval, args.length, time.time() )
+	)
 
         setup_config()
 
