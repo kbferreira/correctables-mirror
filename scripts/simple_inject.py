@@ -11,6 +11,9 @@ import argparse as ap
 address = 0x12345000
 
 def setup_config():
+
+	global inject_value
+
         log.debug( 'Initializing memory injection config' )
 
         return_code = call( ( "echo 0x%x > /sys/kernel/debug/apei/einj/param1" ) % address,
@@ -25,7 +28,7 @@ def setup_config():
         if( return_code != 0 ):
                 sys.exit( 'Problem writing injection mask' )
 
-        return_code = call( 'echo 0x8 > /sys/kernel/debug/apei/einj/error_type',
+        return_code = call( 'echo 0x%x > /sys/kernel/debug/apei/einj/error_type' % inject_value,
                         shell = True )
 
         if( return_code != 0 ):
@@ -36,8 +39,9 @@ def setup_config():
 def inject_now():
 
         global inject_cnt
+	global inject_value
 
-        log.debug( 'Inject error now' )
+        log.debug( 'Inject error now (0x%x)' % inject_value)
 
         return_code = call( 'echo 1 > /sys/kernel/debug/apei/einj/error_inject',
                         shell = True )
@@ -52,12 +56,19 @@ def inject_now():
 if __name__ == '__main__':
 
         inject_cnt = 0
+	inject_value = 0x0
 
         parser = ap.ArgumentParser( description = 'Simple memory error injection utility' )
         parser.add_argument( '-i', '--interval', default = 60, type = int,
                         help = 'Interval in seconds to inject memory errors' )
         parser.add_argument( '-l', '--length', default = 1000, type = int,
                         help = 'Length in seconds to run application' )
+        parser.add_argument( '-c', '--dram-correctable', default = True,
+			action = 'store_true',
+                        help = 'inject DRAM correctable error (default on)' )
+        parser.add_argument( '-u', '--dram-uncorrectable', default = False,
+			action = 'store_true',
+                        help = 'inject DRAM uncorrectable error, non-fatal (default off)' )
         parser.add_argument( '-v', '--version', action = 'version', 
                         version = '%(prog)s 1.0' )
 
@@ -68,6 +79,11 @@ if __name__ == '__main__':
                 filename = ( 'correctable_interval-%d_length-%d_time-%f.log' ) % 
 				( args.interval, args.length, time.time() )
 	)
+
+	if( args.dram_uncorrectable ):
+		inject_value = 0x10
+	else:
+		inject_value = 0x8
 
         setup_config()
 
