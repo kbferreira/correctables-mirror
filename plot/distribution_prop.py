@@ -9,7 +9,7 @@ import sys
 def printf(format, *args):
         sys.stdout.write(format % args)
 
-mypath = [ "../data/correctables" ]
+mypath = [ "../data/DRAM-correctable-einj" ]
 
 dest = "../figs/"
 
@@ -32,7 +32,7 @@ while mypath:
                 dirs = map( lambda x: os.path.join( element, x ), dirs )
 
                 # I am sure Scott is thinking about how this is not very 'pythonic'
-                files = filter( lambda x: x.endswith( '.dtr'),
+                files = filter( lambda x: x.endswith( '.data'),
                                 map( lambda x: os.path.join( element, x ), files ) )
 
                 mypath.extend( dirs );
