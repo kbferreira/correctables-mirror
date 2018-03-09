@@ -12,7 +12,7 @@ address = 0x12345000
 
 def setup_config():
 
-	global inject_value
+        global inject_value
 
         log.debug( 'Initializing memory injection config' )
 
@@ -39,8 +39,8 @@ def setup_config():
 def inject_now():
 
         global inject_cnt
-	global inject_value
-	global do_inject
+        global inject_value
+        global do_inject
 
         if( do_inject ):
                 log.debug( 'Inject error now (0x%x)' % inject_value)
@@ -61,8 +61,8 @@ def inject_now():
 if __name__ == '__main__':
 
         inject_cnt = 0
-	inject_value = 0x0
-	do_inject = True
+        inject_value = 0x0
+        do_inject = True
 
         parser = ap.ArgumentParser( description = 'Simple memory error injection utility' )
         parser.add_argument( '-i', '--interval', default = 60, type = int,
@@ -70,29 +70,29 @@ if __name__ == '__main__':
         parser.add_argument( '-l', '--length', default = 1000, type = int,
                         help = 'Length in seconds to run application' )
         parser.add_argument( '-c', '--dram-correctable', default = True,
-			action = 'store_true',
+                        action = 'store_true',
                         help = 'inject DRAM correctable error (default on)' )
         parser.add_argument( '-u', '--dram-uncorrectable', default = False,
-			action = 'store_true',
+                        action = 'store_true',
                         help = 'inject DRAM uncorrectable error non-fatal (default off)' )
         parser.add_argument( '-d', '--dry-run', default = False,
-			action = 'store_true',
+                        action = 'store_true',
                         help = 'Dry-run, so not actually inject the error (default off)' )
         parser.add_argument( '-v', '--version', action = 'version', 
                         version = '%(prog)s 1.0' )
 
         args = parser.parse_args()
 
-	log.basicConfig( level = log.DEBUG,
+        log.basicConfig( level = log.DEBUG,
                 format = '%(levelname)s (%(threadName)-9s): %(message)s', 
                 filename = ( 'correctable_interval-%d_length-%d_time-%f.log' ) % 
-				( args.interval, args.length, time.time() )
-	)
+                                ( args.interval, args.length, time.time() )
+        )
 
-	if( args.dram_uncorrectable ):
-		inject_value = 0x10
-	else:
-		inject_value = 0x8
+        if( args.dram_uncorrectable ):
+                inject_value = 0x10
+        else:
+                inject_value = 0x8
 
         if( args.dry_run ):
                 do_inject = False
