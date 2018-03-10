@@ -83,7 +83,7 @@ if __name__ == '__main__':
         parser.add_argument( '-v', '--version', action = 'version', 
                         version = '%(prog)s 1.0' )
         parser.add_argument( '-a', '--addr', nargs='+', default = [ 0x12345000 ],
-                        type = int, help = 'List of address to inject into (default 0x12345000)' )
+                        type = lambda x: int(x,0), help = 'List of address to inject into (default 0x12345000)' )
 
         args = parser.parse_args()
 
