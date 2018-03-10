@@ -8,19 +8,9 @@ from subprocess import call
 import sys as sys
 import argparse as ap
 
-address = 0x12345000
-
 def setup_config():
 
         global inject_value
-
-        log.debug( 'Initializing memory injection config' )
-
-        return_code = call( ( "echo 0x%x > /sys/kernel/debug/apei/einj/param1" ) % address,
-                        shell = True )
-
-        if( return_code != 0 ):
-                sys.exit( 'Problem writing injection address' )
 
         return_code = call( 'echo $((-1 << 12)) > /sys/kernel/debug/apei/einj/param2',
                         shell = True )
@@ -41,6 +31,18 @@ def inject_now():
         global inject_cnt
         global inject_value
         global do_inject
+        global address
+        global addr_indx
+
+        log.debug( 'Inject address (0x%x)' % address[ addr_indx ] )
+        return_code = call( ( "echo 0x%x > /sys/kernel/debug/apei/einj/param1" ) % 
+                        address[ addr_indx ],
+                        shell = True )
+        
+        if( return_code != 0 ):
+                sys.exit( 'Problem writing injection address' )
+
+        addr_indx = ( addr_indx + 1 ) % len( address )
 
         if( do_inject ):
                 log.debug( 'Inject error now (0x%x)' % inject_value)
@@ -80,6 +82,8 @@ if __name__ == '__main__':
                         help = 'Dry-run, so not actually inject the error (default off)' )
         parser.add_argument( '-v', '--version', action = 'version', 
                         version = '%(prog)s 1.0' )
+        parser.add_argument( '-a', '--addr', nargs='+', default = [ 0x12345000 ],
+                        type = int, help = 'List of address to inject into (default 0x12345000)' )
 
         args = parser.parse_args()
 
@@ -96,6 +100,9 @@ if __name__ == '__main__':
 
         if( args.dry_run ):
                 do_inject = False
+
+        address = args.addr
+        addr_indx = 0
 
         setup_config()
 
