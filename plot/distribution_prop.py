@@ -51,7 +51,7 @@ while mypath:
 
                 for file in files:
                         
-                        printf( "\tDistribution info for %s\n", file )
+                        printf( "  Distribution info for %s\n", file )
 
                         this_name = labels.pop( 0 )
 
@@ -63,6 +63,8 @@ while mypath:
                                         nan_policy = 'omit' )
 
                         sorted = np.sort( data[ :, 1 ] )
+                        max_dtr = sorted[ -1 ]
+
                         cdf = np.arange( len( sorted ) ) / float( len( sorted ) )
 
                         kde = [ stats.gaussian_kde( data[ :, 1 ], bw_method = bw )
@@ -99,8 +101,8 @@ while mypath:
                                 plt.plot( range, kde[ i ]( range ), lw = 1,
                                                 label = 'bw = ' + str( bw ) )
 
-                        printf( "\t\t%s kurtosis: %g, skew: %g\n", this_name,
-                                        kurtosis, skew )
+                        printf( "\t%s kurtosis: %g, skew: %g, max: %.3g secs.\n", this_name,
+                                        kurtosis, skew, max_dtr )
 
                         plt.text( 0.6, 0.75,
                                         "kurtosis = " + '{:.2}'.format( kurtosis ) + 
