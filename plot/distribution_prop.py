@@ -102,7 +102,7 @@ while mypath:
                                                 label = 'bw = ' + str( bw ) )
 
                         printf( "\t%s kurtosis: %g, skew: %g, max: %.3g secs.\n", this_name,
-                                        kurtosis, skew, max_dtr )
+                                        kurtosis, skew, max_dtr / 1.0e9 )
 
                         plt.text( 0.6, 0.75,
                                         "kurtosis = " + '{:.2}'.format( kurtosis ) + 
