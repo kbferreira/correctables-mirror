@@ -1,0 +1,239 @@
+%
+% Some common definitions
+%
+
+\providecommand{\email}[1]{\url{#1}}
+\newcommand{\LogGOPSim}{{\texttt{Log\-GOP\-Sim}}\xspace}
+
+%
+% ------------------------------------------------------------------------------
+% Help functions for references
+%
+\providecommand{\assignmentname}{Exercise}
+\providecommand{\equationname}{Equation}
+\providecommand{\figurename}{Figure}
+\providecommand{\figuresname}{Figures}
+\providecommand{\tablename}{Table}
+\providecommand{\nameofsection}{Section}
+\newcommand{\reffig}[1]{\figurename~\ref{#1}}
+\newcommand{\refsubfig}[1]{\figurename~\subref{#1}}
+\newcommand{\reftwosubfig}[2]{\figuresname~\subref{#1} and \subref{#2}}
+\newcommand{\reftwofig}[2]{\figuresname~\ref{#1} and \ref{#2}}
+\newcommand{\refthreesubfig}[3]{\figuresname~\subref{#1}, \subref{#2}, and \subref{#3}}
+\newcommand{\refthreefig}[3]{\figuresname~\ref{#1}, \ref{#2}, and \ref{#3}}
+\newcommand{\reftab}[1]{\tablename~\ref{#1}}
+\newcommand{\reflst}[1]{\lstlistingname~\ref{#1}}
+\newcommand{\refchap}[1]{\chaptername~\ref{#1}}
+\newcommand{\refapp}[1]{\appendixname~\ref{#1}}
+%\newcommand{\refsec}[1]{\sectionname~\ref{#1}}
+\newcommand{\refsec}[1]{\nameofsection~\ref{#1}}
+\newcommand{\refeq}[1]{\equationname~\ref{#1}}
+\newcommand{\refpage}[1]{on page~\pageref{#1}}
+
+
+\newlength{\fullfigWidth}
+\setlength{\fullfigWidth}{0.855\columnwidth}
+
+\newlength{\twoacross}
+\setlength{\twoacross}{0.4\textwidth}
+
+\newlength{\threeacross}
+\setlength{\threeacross}{0.315\textwidth}
+
+%
+% ------------------------------------------------------------------------------
+% Help functions for editing
+%
+\definecolor{NoteColor}{rgb}{0.71, 0.22, 0.21}
+\newcommand{\note}[1]{{\color{NoteColor}\bf Note: }{\color{NoteColor} #1}}
+\newcommand{\hl}[1]{\textcolor{red}{\texttt{#1}}}
+
+
+
+%
+% ------------------------------------------------------------------------------
+% General
+%
+\newcommand*{\OS}{operating system\xspace}
+\newcommand*{\OSes}{operating systems\xspace}
+\newcommand{\rmpi}{\textit{r}MPI\xspace}
+
+
+
+%
+% Programming
+%
+\newcommand*{\file}[1]{{\small\texttt{#1}}\xspace}
+\newcommand*{\cmd}[1]{{\small\texttt{#1}}\xspace}
+\newcommand*{\var}[1]{{\small\texttt{#1}}\xspace}
+\newcommand*{\keyword}[1]{{\small\texttt{#1}}\xspace}
+% \newcommand*{\func}[1]{\texttt{\textcolor{funcfg}{#1()}}\xspace}
+\newcommand*{\func}[1]{{\small\texttt{#1()}}\xspace}
+% \newcommand*{\mfunc}[1]{\texttt{\textcolor{funcfg}{#1()}}\index{#1 (func)}\index{MPI functions!#1}\xspace}
+\newcommand*{\mfunc}[1]{{\small\texttt{#1()}}\index{#1 (func)}\index{MPI functions!#1}\xspace}
+\newcommand*{\pfunc}[1]{{\small\texttt{#1()}}\index{#1 (func)}\index{Pthreads functions!#1}\xspace}
+\newcommand*{\code}[1]{{\small\texttt{#1}}\xspace}
+\renewcommand*{\arg}[1]{{\small\texttt{#1}}\xspace}
+\newcommand*{\type}[1]{{\small\texttt{#1}}\index{#1 (type)}\index{data types!#1}\xspace}
+\newcommand*{\mtype}[1]{{\small\texttt{#1}}\index{#1 (type)}\index{MPI data types!#1}\xspace}
+\newcommand*{\ptype}[1]{{\small\texttt{#1}}\index{#1 (type)}\index{pthreads data types!#1}\xspace}
+\newcommand*{\mconst}[1]{{\small\texttt{#1}}\index{#1 (const.)}\index{MPI constants!#1}\xspace}
+\newcommand*{\pconst}[1]{{\small\texttt{#1}}\index{#1 (const.)}\index{pthreads constants!#1}\xspace}
+
+\newcommand*{\MAXINT}{\type{MAX\_INT}\xspace}
+\newcommand*{\NULL}{\type{NULL}\xspace}
+
+
+
+
+%
+% MPI types
+%
+\newcommand*{\MPIStatus}{\mtype{MPI\_\-Status}}
+\newcommand*{\MPISOURCE}{\mtype{MPI\_\-SOURCE}}
+\newcommand*{\MPITAG}{\mtype{MPI\_\-TAG}}
+
+
+
+%
+% MPI data types
+%
+\newcommand*{\MPICHAR}{\mtype{MPI\_\-CHAR}}
+\newcommand*{\MPISIGNEDCHAR}{\mtype{MPI\_\-SIGNED\_\-CHAR}}
+\newcommand*{\MPISHORT}{\mtype{MPI\_\-SHORT}}
+\newcommand*{\MPIINT}{\mtype{MPI\_\-INT}}
+\newcommand*{\MPIINTEGER}{\mtype{MPI\_\-INTEGER}} % Fortran only
+\newcommand*{\MPILONG}{\mtype{MPI\_\-LONG}}
+\newcommand*{\MPILONGLONGINT}{\mtype{MPI\_\-LONG\_\-LONG\_\-INT}}
+\newcommand*{\MPILONGLONG}{\mtype{MPI\_\-LONG\_\-LONG}} % Exists due to an error in MPI-2.0. Should be MPI_LONG_LONG_INT
+\newcommand*{\MPIUNSIGNEDLONGLONG}{\mtype{MPI\_\-UNSIGNED\_\-LONG\_\-LONG}}
+\newcommand*{\MPIUNSIGNEDCHAR}{\mtype{MPI\_\-UNSIGNED\_\-CHAR}}
+\newcommand*{\MPIUNSIGNEDSHORT}{\mtype{MPI\_\-UNSIGNED\_\-SHORT}}
+\newcommand*{\MPIUNSIGNED}{\mtype{MPI\_\-UNSIGNED}}
+\newcommand*{\MPIUNSIGNEDLONG}{\mtype{MPI\_\-UNSIGNED\_\-LONG}}
+\newcommand*{\MPIFLOAT}{\mtype{MPI\_\-FLOAT}}
+\newcommand*{\MPIDOUBLE}{\mtype{MPI\_\-DOUBLE}}
+\newcommand*{\MPILONGDOUBLE}{\mtype{MPI\_\-LONG\_\-DOUBLE}}
+\newcommand*{\MPIBYTE}{\mtype{MPI\_\-BYTE}}
+\newcommand*{\MPIPACKED}{\mtype{MPI\_\-PACKED}}
+\newcommand*{\MPIWCHAR}{\mtype{MPI\_\-WCHAR}}
+
+
+
+%
+% MPI Constants
+%
+\newcommand*{\MPIINPLACE}{\mconst{MPI\_\-IN\_\-PLACE}}
+\newcommand*{\MPICOMMWORLD}{\mconst{MPI\_\-COMM\_\-WORLD}}
+\newcommand*{\MPIANYSOURCE}{\mconst{MPI\_\-ANY\_\-SOURCE}}
+\newcommand*{\MPIANYTAG}{\mconst{MPI\_\-ANY\_\-TAG}}
+\newcommand*{\MPITAGUB}{\mconst{MPI\_\-TAG\_\-UB}}
+\newcommand*{\MPISUCCESS}{\mconst{MPI\_\-SUCCESS}}
+\newcommand*{\MPISTATUSIGNORE}{\mconst{MPI\_\-STATUS\_\-IGNORE}}
+\newcommand*{\MPISTATUSESIGNORE}{\mconst{MPI\_\-STATUSES\_\-IGNORE}}
+\newcommand*{\MPIWTIMEISGLOBAL}{\mconst{MPI\_\-WTIME\_\-IS\_\-GLOBAL}}
+\newcommand*{\MPIUNDEFINED}{\mconst{MPI\_\-UNDEFINED}}
+\newcommand*{\MPIREQUESTNULL}{\mconst{MPI\_\-REQUEST\_\-NULL}}
+
+
+
+%
+% MPI Collective Functions
+%
+\newcommand*{\MPIBarrier}{\mfunc{MPI\_\-Barrier}}
+\newcommand*{\MPIBcast}{\mfunc{MPI\_\-Bcast}}
+\newcommand*{\MPIReduce}{\mfunc{MPI\_\-Reduce}}
+\newcommand*{\MPIGather}{\mfunc{MPI\_\-Gather}}
+\newcommand*{\MPIScatter}{\mfunc{MPI\_\-Scatter}}
+\newcommand*{\MPIAllgather}{\mfunc{MPI\_\-Allgather}}
+\newcommand*{\MPIAllreduce}{\mfunc{MPI\_\-Allreduce}}
+\newcommand*{\MPIAlltoall}{\mfunc{MPI\_\-Alltoall}}
+\newcommand*{\MPIScan}{\mfunc{MPI\_\-Scan}}
+\newcommand*{\MPIExscan}{\mfunc{MPI\_\-Exscan}}
+\newcommand*{\MPIGatherv}{\mfunc{MPI\_\-Gatherv}}
+\newcommand*{\MPIScatterv}{\mfunc{MPI\_\-Scatterv}}
+\newcommand*{\MPIAllgatherv}{\mfunc{MPI\_\-Allgatherv}}
+\newcommand*{\MPIAlltoallv}{\mfunc{MPI\_\-Alltoallv}}
+\newcommand*{\MPIReducescatter}{\mfunc{MPI\_\-Reduce\_\-scatter}}
+\newcommand*{\MPIAlltoallw}{\mfunc{MPI\_\-Alltoallw}}
+\newcommand*{\MPIOpcreate}{\mfunc{MPI\_\-Op\_\-create}}
+\newcommand*{\MPIOpfree}{\mfunc{MPI\_\-Op\_\-free}}
+
+
+%
+% MPI Functions
+%
+\newcommand*{\MPIInit}{\mfunc{MPI\_\-Init}}
+\newcommand*{\MPIInitalized}{\mfunc{MPI\_\-Initialized}}
+\newcommand*{\MPIFinalize}{\mfunc{MPI\_\-Finalize}}
+\newcommand*{\MPICommrank}{\mfunc{MPI\_\-Comm\_\-rank}}
+\newcommand*{\MPICommsize}{\mfunc{MPI\_\-Comm\_\-size}}
+\newcommand*{\MPICommdup}{\mfunc{MPI\_\-Comm\_\-dup}}
+\newcommand*{\MPICommsplit}{\mfunc{MPI\_\-Comm\_\-split}}
+\newcommand*{\MPIRequestfree}{\mfunc{MPI\_\-Request\_\-free}}
+\newcommand*{\MPIWtime}{\mfunc{MPI\_\-Wtime}}
+\newcommand*{\MPISend}{\mfunc{MPI\_\-Send}}
+\newcommand*{\MPIIsend}{\mfunc{MPI\_\-Isend}}
+\newcommand*{\MPIRecv}{\mfunc{MPI\_\-Recv}}
+\newcommand*{\MPIIrecv}{\mfunc{MPI\_\-Irecv}}
+\newcommand*{\MPIWait}{\mfunc{MPI\_\-Wait}}
+\newcommand*{\MPIWaitall}{\mfunc{MPI\_\-Wait\-all}}
+\newcommand*{\MPIWaitany}{\mfunc{MPI\_\-Wait\-any}}
+\newcommand*{\MPITest}{\mfunc{MPI\_\-Test}}
+\newcommand*{\MPITestall}{\mfunc{MPI\_\-Test\-all}}
+\newcommand*{\MPITestany}{\mfunc{MPI\_\-Test\-any}}
+\newcommand*{\MPIProbe}{\mfunc{MPI\_\-Probe}}
+\newcommand*{\MPIIprobe}{\mfunc{MPI\_\-Iprobe}}
+\newcommand*{\MPIAbort}{\mfunc{MPI\_\-Abort}}
+\newcommand*{\MPICancel}{\mfunc{MPI\_\-Cancel}}
+\newcommand*{\MPICartcreate}{\mfunc{MPI\_\-Cart\_\-create}}
+\newcommand*{\MPIStart}{\mfunc{MPI\_\-Start}}
+\newcommand*{\MPIRecvinit}{\mfunc{MPI\_\-Recv\_\-init}}
+\newcommand*{\MPIStartall}{\mfunc{MPI\_\-Startall}}
+\newcommand*{\MPIGrouprank}{\mfunc{MPI\_\-Group\_\-rank}}
+\newcommand*{\MPIGroupstar}{\mfunc{MPI\_\-Group\_$\ast$}}
+
+
+
+%
+% MPI Data Type Functions
+%
+\newcommand*{\MPITypecontiguous}{\mfunc{MPI\_\-Type\_\-contiguous}}
+\newcommand*{\MPITypecommit}{\mfunc{MPI\_\-Type\_\-commit}}
+\newcommand*{\MPITypefree}{\mfunc{MPI\_\-Type\_\-free}}
+\newcommand*{\MPITypevector}{\mfunc{MPI\_\-Type\_\-vector}}
+\newcommand*{\MPITypeindexed}{\mfunc{MPI\_\-Type\_\-indexed}}
+\newcommand*{\MPITypegetextent}{\mfunc{MPI\_\-Type\_\-get\_\-extent}}
+\newcommand*{\MPITypeextent}{\mfunc{MPI\_\-Type\_\-extent}} % MPI-1 depreciated
+\newcommand*{\MPITypelb}{\mfunc{MPI\_\-Type\_\-lb}} % MPI-1 depreciated
+\newcommand*{\MPITypeub}{\mfunc{MPI\_\-Type\_\-ub}} % MPI-1 depreciated
+\newcommand*{\MPIGetcount}{\mfunc{MPI\_\-Get\_\-count}}
+\newcommand*{\MPITypegettrueextent}{\mfunc{MPI\_\-Type\_\-get\_\-true\_\-extent}}
+\newcommand*{\MPITypesize}{\mfunc{MPI\_\-Type\_\-size}}
+\newcommand*{\MPITypecreateresized}{\mfunc{MPI\_\-Type\_\-create\_\-resized}}
+\newcommand*{\MPITypecreatestruct}{\mfunc{MPI\_\-Type\_\-create\_\-struct}}
+\newcommand*{\MPIGetaddress}{\mfunc{MPI\_\-Get\_\-address}}
+
+
+
+
+% MPI ops
+\newcommand*{\MPIMAX}{\code{MPI\_\-MAX\index{MPI\_\-MAX}\index{MPI predefined functions!MPI\_\-MAX}}}
+\newcommand*{\MPIMIN}{\code{MPI\_\-MIN\index{MPI\_\-MIN}\index{MPI predefined functions!MPI\_\-MIN}}}
+\newcommand*{\MPISUM}{\code{MPI\_\-SUM\index{MPI\_\-SUM}\index{MPI predefined functions!MPI\_\-SUM}}}
+\newcommand*{\MPIPROD}{\code{MPI\_\-PROD\index{MPI\_\-PROD}\index{MPI predefined functions!MPI\_\-PROD}}}
+\newcommand*{\MPILAND}{\code{MPI\_\-LAND\index{MPI\_\-LAND}\index{MPI predefined functions!MPI\_\-LAND}}}
+\newcommand*{\MPIBAND}{\code{MPI\_\-BAND\index{MPI\_\-BAND}\index{MPI predefined functions!MPI\_\-BAND}}}
+\newcommand*{\MPILOR}{\code{MPI\_\-LOR\index{MPI\_\-LOR}\index{MPI predefined functions!MPI\_\-LOR}}}
+\newcommand*{\MPIBOR}{\code{MPI\_\-BOR\index{MPI\_\-BOR}\index{MPI predefined functions!MPI\_\-BOR}}}
+\newcommand*{\MPILXOR}{\code{MPI\_\-LXOR\index{MPI\_\-LXOR}\index{MPI predefined functions!MPI\_\-LXOR}}}
+\newcommand*{\MPIBXOR}{\code{MPI\_\-BXOR\index{MPI\_\-BXOR}\index{MPI predefined functions!MPI\_\-BXOR}}}
+\newcommand*{\MPIMAXLOC}{\code{MPI\_\-MAXLOC\index{MPI\_\-MAXLOC}\index{MPI predefined functions!MPI\_\-MAXLOC}}}
+\newcommand*{\MPIMINLOC}{\code{MPI\_\-MINLOC\index{MPI\_\-MINLOC}\index{MPI predefined functions!MPI\_\-MINLOC}}}
+
+\newcommand*{\MPIFLOATINT}{\code{MPI\_\-FLOAT\_INT\index{MPI\_\-FLOAT\_\-INT}\index{MPI predefined datatypes!MPI\_\-FLOAT\_\-INT}}}
+\newcommand*{\MPIDOUBLEINT}{\code{MPI\_\-DOUBLE\_\-INT\index{MPI\_\-DOUBLE\_\-INT}\index{MPI predefined datatypes!MPI\_\-DOUBLE\_\-INT}}}
+\newcommand*{\MPILONGINT}{\code{MPI\_\-LONG\_\-INT\index{MPI\_\-LONG\_\-INT}\index{MPI predefined datatypes!MPI\_\-LONG\_\-INT}}}
+\newcommand*{\MPITWOINT}{\code{MPI\_\-2INT\index{MPI\_\-2INT}\index{MPI predefined datatypes!MPI\_\-2INT}}}
+\newcommand*{\MPISHORTINT}{\code{MPI\_\-SHORT\_\-INT\index{MPI\_\-SHORT\_\-INT}\index{MPI predefined datatypes!MPI\_\-SHORT\_\-INT}}}
+\newcommand*{\MPILONGDOUBLEINT}{\code{MPI\_\-LONG\_\-DOUBLE\_\-INT\index{MPI\_\-LONG\_\-DOUBLE\_\-INT}\index{MPI predefined datatypes!MPI\_\-LONG\_\-DOUBLE\_\-INT}}}

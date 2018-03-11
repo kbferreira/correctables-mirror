@@ -1,0 +1,75 @@
+% R&A Tracking number: 
+\documentclass[conference]{IEEEtran}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage{xcolor}
+\usepackage{xspace}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{grffile}
+% Prevent single column figures from being rendered before double column figures
+\usepackage{fixltx2e}
+
+\graphicspath{{figs/}}
+
+\newcommand{\sll}[1]{\textcolor{blue}{[sll: #1]}}
+\newcommand{\kbf}[1]{\textcolor{red}{[kbf: #1]}}
+% For double-blind review, we should prob'ly use a different name
+\newcommand{\cielo}{{\bf{[system name]}}\xspace}
+\newcommand{\doubleblind}[1]{{\bf{[removed for double-blind review]}\xspace}}
+
+\input{defs}
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+\title{A Fistful of Errors: Lessons learned from errors observed over the lifetime of \cielo}
+
+\author{\IEEEauthorblockN{Scott Levy\IEEEauthorrefmark{1},
+Kurt B. Ferreira\IEEEauthorrefmark{1},
+Nathan DeBardeleben\IEEEauthorrefmark{2},
+Elisabeth Baseman\IEEEauthorrefmark{2}}
+\IEEEauthorblockA{\IEEEauthorrefmark{1}Center for Computing Research, Sandia National Laboratories\\
+\email{{sllevy, kbferre}@sandia.gov}}
+\IEEEauthorblockA{\IEEEauthorrefmark{2}
+Ultrascale Systems Research Center, Los Alamos National Laboratory\\
+\email{{ndebard}@lanl.gov}}
+} % end AUTHOR block
+
+\maketitle
+\input{abstract}
+
+%\input{intro}
+
+%\input{approach}
+
+%\input{results}
+
+%\input{lessons}
+
+%\input{related}
+
+%\input{conclusion}
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+%\IEEEpeerreviewmaketitle
+
+% use section* for acknowledgment
+\section*{Acknowledgment}
+\kbf{Add blurbs}
+
+\bibliographystyle{IEEEtran}
+\bibliography{all} 
+
+\end{document}
