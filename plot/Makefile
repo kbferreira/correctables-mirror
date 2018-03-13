@@ -4,11 +4,20 @@ FIGS_DIR =../figs
 
 DIRS = $(sort $(dir $(wildcard ../data/*/*/)))
 
-all:
-	./distribution_prop.py
+DATAdetour = $(wildcard ../data/DRAM-correctable-einj/*/*.data)
+FIGSdetour = $(addprefix ${FIGS_DIR}/, $(notdir $(DATAdetour:.data=_dtr.eps)))
+PATTERNdetour = $(subst selfish,%,${FIGSdetour})
+SCRIPTdetour = ./distribution_prop.py
+
+print-%  : ; @echo $* = $($*)
+
+all: ${FIGSdetour}
+
+${PATTERNdetour}: ${DATAdetour} ${SCRIPTdetour}
+	${SCRIPTdetour}
 
 print-%  : ; @echo $* = $($*)
 
 clean:
-	-rm -f ${EPSFIGS}
-	-rm -f ${FIGS_DIR}/*.eps
+	-rm -f ${FIGSdetour}
+	-rm -f ${FIGS_DIR}/*.pdf

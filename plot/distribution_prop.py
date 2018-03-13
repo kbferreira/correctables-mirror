@@ -65,10 +65,10 @@ while mypath:
                         sorted = np.sort( data[ :, 1 ] )
                         max_dtr = sorted[ -1 ]
 
-                        cdf = np.arange( len( sorted ) ) / float( len( sorted ) )
+                        #cdf = np.arange( len( sorted ) ) / float( len( sorted ) )
 
-                        kde = [ stats.gaussian_kde( data[ :, 1 ], bw_method = bw )
-                                        for bw in bw_values ]
+                        #kde = [ stats.gaussian_kde( data[ :, 1 ], bw_method = bw )
+                        #                for bw in bw_values ]
 
                         fig, ax = plt.subplots()
                         ax.set_yscale( 'log' )
@@ -78,58 +78,57 @@ while mypath:
                                         label = 'detour', lw = 1 )
                         plt.xlabel( "Timestamp (sec)" )
                         plt.ylabel( "Detour (ns)" )
-                        plt.savefig( dest + this_name + '_' + fprefix +
-                                        '_dtr.eps' )
+                        plt.savefig( dest + this_name + '_dtr.eps' )
                         plt.close()
 
-                        fig, ax = plt.subplots()
+                        #fig, ax = plt.subplots()
 
-                        ax.set_yscale( 'log' )
+                        #ax.set_yscale( 'log' )
 
                         #p, x = np.histogram( delta, bins = ( len( delta ) / N ),
                         #                normed = True )
                         #x = x[ : -1 ] + ( x[ 1 ] - x[ 0 ] ) / 2   # convert bin edges to centers
                         #ax.step( x, p )
 
-                        plt.hist( data[ :, 1 ], N, normed=1, facecolor='blue',
-                                        alpha=0.5 )
+                        #plt.hist( data[ :, 1 ], N, normed=1, facecolor='blue',
+                        #                alpha=0.5 )
 
-                        range = np.linspace( min( data[ :, 1 ] ), max( data[ :, 1] ),
-                                        N )
+                        #range = np.linspace( min( data[ :, 1 ] ), max( data[ :, 1] ),
+                        #                N )
 
-                        for i, bw in enumerate( bw_values ):
-                                plt.plot( range, kde[ i ]( range ), lw = 1,
-                                                label = 'bw = ' + str( bw ) )
+                        #for i, bw in enumerate( bw_values ):
+                        #        plt.plot( range, kde[ i ]( range ), lw = 1,
+                        #                        label = 'bw = ' + str( bw ) )
 
                         printf( "\t%s kurtosis: %g, skew: %g, max: %.3g secs.\n", this_name,
                                         kurtosis, skew, max_dtr / 1.0e9 )
 
-                        plt.text( 0.6, 0.75,
-                                        "kurtosis = " + '{:.2}'.format( kurtosis ) + 
-                                        "\nskew = " + '{:.2}'.format( skew ),
-                                        horizontalalignment = 'left',
-                                        verticalalignment = 'center',
-                                        transform = ax.transAxes,
-                                        bbox = dict( facecolor = 'white', 
-                                                alpha = 0.5 ),
-                                        fontsize = 10 
-                        )
+                        #plt.text( 0.6, 0.75,
+                        #                "kurtosis = " + '{:.2}'.format( kurtosis ) + 
+                        #                "\nskew = " + '{:.2}'.format( skew ),
+                        #                horizontalalignment = 'left',
+                        #                verticalalignment = 'center',
+                        #                transform = ax.transAxes,
+                        #                bbox = dict( facecolor = 'white', 
+                        #                        alpha = 0.5 ),
+                        #                fontsize = 10 
+                        #)
 
-                        plt.legend( loc = 'best' )
-                        plt.xlabel( "Detour (ns)" )
-                        plt.ylabel( "Probability ($P(x = X)$)" )
-                        plt.savefig( dest + this_name + '_' + fprefix +
-                                        '_pdf.eps' )
-                        plt.close()
+                        #plt.legend( loc = 'best' )
+                        #plt.xlabel( "Detour (ns)" )
+                        #plt.ylabel( "Probability ($P(x = X)$)" )
+                        #plt.savefig( dest + this_name + '_' + fprefix +
+                        #                '_pdf.eps' )
+                        #plt.close()
 
-                        fig, ax = plt.subplots()
+                        #fig, ax = plt.subplots()
 
-                        plt.plot( sorted, cdf, label = '$CDF( x )$', lw = 1 )
-                        plt.legend( loc = 'best' )
-                        plt.xlabel( "Detour (ns)" )
-                        plt.ylabel( 'Cummulative Probability ($P(x \leq X)$)' )
-                        plt.savefig( dest + this_name + '_' + fprefix +
-                                        '_cdf.eps' )
-                        plt.close()
+                        #plt.plot( sorted, cdf, label = '$CDF( x )$', lw = 1 )
+                        #plt.legend( loc = 'best' )
+                        #plt.xlabel( "Detour (ns)" )
+                        #plt.ylabel( 'Cummulative Probability ($P(x \leq X)$)' )
+                        #plt.savefig( dest + this_name + '_' + fprefix +
+                        #                '_cdf.eps' )
+                        #plt.close()
                         
 
