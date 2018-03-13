@@ -44,3 +44,4 @@ clean:
 	-rm -f *~
 	-rm -f *.bak
 	-rm -f all.bib
+	-rm -f *.bbl
