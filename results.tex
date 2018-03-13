@@ -20,5 +20,24 @@
 \caption{
 \kbf{ADD CAPTION}
 }
-\label{fig:blake}
+\label{fig:baselines}
+\end{figure*}
+
+\begin{figure*}
+\centering{
+        \subfloat[EDAC]{
+                \includegraphics[ width=0.45\textwidth ]
+                        {blake-10sec-edac-selfish-cpu0_dtr}
+                \label{FF:EDAC}
+        }
+        \subfloat[EXTLOG]{
+                \includegraphics[ width=0.45\textwidth ]
+                        {blake-10sec-extlog-selfish-cpu0_dtr}
+                \label{FF:EXTLOG}
+        }
+}
+\caption{
+Firmware first APEI ``DRAM correctable'' error injection at a 10 second interval
+}
+\label{fig:FF:injection}
 \end{figure*}
