@@ -72,7 +72,7 @@ while mypath:
 
                         fig, ax = plt.subplots()
                         ax.set_yscale( 'log' )
-                        ax.set_ylim( [ 1*10**2, 1*10**8 ] )
+                        ax.set_ylim( [ 1*10**2, 1*10**9 ] )
                         plt.plot( data[ :, 0 ] * 1.0e-9,
                                         data[ :, 1 ],
                                         label = 'detour', lw = 1 )

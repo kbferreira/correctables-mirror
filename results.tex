@@ -41,3 +41,23 @@ Firmware first APEI ``DRAM correctable'' error injection at a 10 second interval
 }
 \label{fig:FF:injection}
 \end{figure*}
+
+\begin{figure*}
+\centering{
+        \subfloat[EDAC]{
+                \includegraphics[ width=0.45\textwidth ]
+                        {blake-10sec-edac-ignore_ce-selfish-cpu0_dtr}
+                \label{ignore_ce:EDAC}
+        }
+        \subfloat[EXTLOG]{
+                \includegraphics[ width=0.45\textwidth ]
+                        {blake-10sec-extlog-ignore_ce-selfish-cpu0_dtr}
+                \label{ignore_ce:EXTLOG}
+        }
+}
+\caption{
+Firmware first APEI ``DRAM correctable'' error injection at a 10 second interval with
+        {\texttt{mca=ignore\_ce}}
+}
+\label{fig:FF:ignore_ce}
+\end{figure*}
