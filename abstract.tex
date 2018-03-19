@@ -1,4 +1,26 @@
 
 \begin{abstract}
-\kbf{ADD}
+
+% Motivation
+        Fault-tolerance poses a major challenge for future large-scale systems.
+        Active research in the field typically focuses on mitigating the effects
+        of uncorrectable errors, those fatal errors that typically require an
+        application to restart from a known good state.
+% Methods/Procedures
+        However, the impacts of the most common error of large-scale systems,
+        correctable errors, is typically overlooked.  In this work, we use a
+        simulation-based approach to show how local correctable errors can
+        significantly affect the performance of key extreme-scale workloads.
+% Findings
+        Specifically, we show that though much of the focus on correctable errors
+        is focused on reducing failure rates, reducing the rate of each individual
+        error may dominate the overheads at scale.  Our study shows that 
+        local delays due to correctable errors can propagate through message
+        synchronization to other processes, causing a cascading series of delays.
+% Conclusion/Impacts
+        This work provides critical analysis and insight into the overheads of
+        common correctable errors and provides practical advice to users and 
+        systems administrators in an effort to fine-tune performance to application
+        and system characteristics.
 \end{abstract}
+
