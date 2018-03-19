@@ -7,7 +7,7 @@ DIRS = $(sort $(dir $(wildcard ../data/*/*/)))
 DATAdetour = $(wildcard ../data/DRAM-correctable-einj/*/*.data)
 FIGSdetour = $(addprefix ${FIGS_DIR}/, $(notdir $(DATAdetour:.data=_dtr.eps)))
 PATTERNdetour = $(subst selfish,%,${FIGSdetour})
-SCRIPTdetour = ./distribution_prop.py
+SCRIPTdetour = ./detour.py 
 
 print-%  : ; @echo $* = $($*)
 
