@@ -10,16 +10,26 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{grffile}
+\usepackage[Blind]{optional}
 % Prevent single column figures from being rendered before double column figures
 \usepackage{fixltx2e}
 
 \graphicspath{{figs/}}
 
+\opt{Blind}{
+        \newcommand{\blake}{{\bf{[system name]}}\xspace}
+        \newcommand{\cielo}{{\bf{[system name]}}\xspace}
+        \newcommand{\detail}[1]{{\bf{[removed for double-blind review]}\xspace}}
+}
+
+\opt{NotBlind}{
+        \newcommand{\blake}{Blake\xspace}
+        \newcommand{\cielo}{Cielo\xspace}
+        \newcommand{\detail}[1]{#1}
+}
+
 \newcommand{\sll}[1]{\textcolor{blue}{[sll: #1]}}
 \newcommand{\kbf}[1]{\textcolor{red}{[kbf: #1]}}
-% For double-blind review, we should prob'ly use a different name
-\newcommand{\cielo}{{\bf{[system name]}}\xspace}
-\newcommand{\doubleblind}[1]{{\bf{[removed for double-blind review]}\xspace}}
 
 \input{defs}
 \hyphenation{op-tical net-works semi-conduc-tor}
@@ -28,6 +38,7 @@
 \begin{document}
 \title{Understanding the Effects of Correctable Errors at Scale}
 
+\opt{NotBlind}{
 \author{\IEEEauthorblockN{
 Kurt B. Ferreira\IEEEauthorrefmark{1},
 Scott Levy\IEEEauthorrefmark{1},
@@ -47,11 +58,12 @@ Ultrascale Systems Research Center, Los Alamos National Laboratory\\
 RAS Architecture, Advanced Micro Devices, Inc.\\
 \email{{taniya.siddiqua, vilas.sridharan}@amd.com}}
 } % end AUTHOR block
+}
 
 \maketitle
 \input{abstract}
 
-%\input{intro}
+\input{intro}
 
 %\input{approach}
 
@@ -75,10 +87,12 @@ RAS Architecture, Advanced Micro Devices, Inc.\\
 %\IEEEpeerreviewmaketitle
 
 % use section* for acknowledgment
+\opt{NotBlind}{
 \section*{Acknowledgment}
 \kbf{Add blurbs}
+}
 
-%\bibliographystyle{IEEEtran}
-%\bibliography{all} 
+\bibliographystyle{IEEEtran}
+\bibliography{all} 
 
 \end{document}

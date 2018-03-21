@@ -1,0 +1,32 @@
+
+\section{Introduction}
+\label{sec:intro}
+
+Maintaining the performance of high-performance computing~(HPC) applications as
+failures become more and more frequent is a major challenge that needs to be
+addressed for next-generation extreme-scale systems.  Many recent studies have
+demonstrated that hardware failures are expected to become ever more
+common~\cite{Bergman08exascalecomputing}.  Increasing the scale of HPC systems
+requires the aggregation of larger number of individual components.  More
+components means more frequent failures.  Current systems use powerful
+error-correcting codes~(ECC), e.g., chipkill-correct, to protect against DRAM
+errors.  However, chipkill-correct (and other similar techniques) require the
+activation of a large number of memory devices (four times more than
+less-protective techniques like single error correct double error
+detect~(SECDED))~\cite{Jian13}.  Activating more memory devices requires more
+power for each memory access.  However, because of tightening power budgets on
+next-generation systems~\cite{Bergman08exascalecomputing}, it is not yet clear
+that chipkill-correct will continue to be viable.  Reduced device-feature sizes
+also have the potential to result in more frequent failures.  Understanding the
+implications of these trends requires that we have detailed knowledge of how
+failures affect current leadership-class systems.
+
+Recent works typically focus on uncorrectable errors, those errors that cause
+applications to restart.  However, the impacts of the most common error of
+large-scale systems, correctable errors, is typically overlooked. An analysis of
+failures on recent leadership-class systems show that the correctale failure
+rate is a factor \hl{ADD} more frequently than uncorrectale errors.  Correctable
+errors are typically handled at a hardware level, and not reflected to the
+application.  While the application can continue to make progress in the
+presence of these correctale errors, the mechcanism to correct and log these
+errors have the potential to impact application performance.
