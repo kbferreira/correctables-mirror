@@ -6,7 +6,7 @@ export TEXINPUTS:=./include:${TEXINPUTS}
 export BSTINPUTS:=./include:${BSTINPUTS}
 
 SOURCES      = paper.tex
-PDF	     = $(SOURCES:.tex=.pdf)
+PDF          = $(SOURCES:.tex=.pdf)
 BASE         = $(SOURCES:.tex=)
 
 TEXSRC       = $(filter-out $(SOURCES), $(shell ls *.tex))
