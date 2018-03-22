@@ -2,14 +2,16 @@
 \documentclass[conference]{IEEEtran}
 \usepackage{url}
 \usepackage{amsmath}
+\usepackage[caption=false,font=footnotesize]{subfig}
 \usepackage{graphicx}
 \usepackage{verbatim}
-\usepackage[caption=false,font=footnotesize]{subfig}
 \usepackage{xcolor}
 \usepackage{xspace}
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{grffile}
+\usepackage{tikz}
+\usepackage{cleveref}
 \usepackage[Blind]{optional}
 % Prevent single column figures from being rendered before double column figures
 \usepackage{fixltx2e}
@@ -17,9 +19,9 @@
 \graphicspath{{figs/}}
 
 \opt{Blind}{
-        \newcommand{\blake}{{\bf{[system name]}}\xspace}
-        \newcommand{\cielo}{{\bf{[system name]}}\xspace}
-        \newcommand{\detail}[1]{{\bf{[removed for double-blind review]}\xspace}}
+        \newcommand{\blake}{{\bf{[production system name]}}\xspace}
+        \newcommand{\cielo}{{\bf{[developemt system name]}}\xspace}
+        \newcommand{\detail}[1]{{\bf{[detail removed for double-blind review]}\xspace}}
 }
 
 \opt{NotBlind}{
