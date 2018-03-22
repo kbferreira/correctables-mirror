@@ -1,0 +1,49 @@
+
+\section{Experiential Approach}
+\label{sec:approach}
+
+\subsection{APEI Injection Framework}
+
+\subsection{Simulating Correctable Overheads}
+
+In general, the communication structure of Message Passing Interface (MPI)
+programs cannot be determined offline because message matches cannot be
+established statically~\cite{bronevetsky2009communication}.  This makes
+modeling application performance analytically challenging even if all
+parameters of the application (e.g., the complete communication structure and
+all relative inter-process timings) are known.  We therefore use a validated
+discrete-event simulation framework to evaluate the impact of local
+correctable error mitigation activities on the performance of real applications.
+%for real applications via their message traces.
+
+Our simulation-based approach models correctable error mitigation activities as CPU detours: periods
+of time during which the CPU is taken from the application and used to compute and commit
+checkpoint data.  This approach allows a level of
+fidelity and control not always possible in implementation-based approaches. It
+also allows us to examine simulated systems much larger than those generally available.
+
+Our simulation framework is based on the freely available
+\LogGOPSim~\cite{Hoefler:2010:LogGOPSim} and the tool chain provided  by Levy et
+al.~\cite{Levy2013UsingSimulation}.  \LogGOPSim uses the LogGOPS model, an
+extension of the well-known LogP model~\cite{Culler:1993:LogP}, to account for
+the temporal cost of communication events.  An application's communication
+events are generated from traces of the application's execution.  These traces
+contain the sequence of MPI operations invoked by each application process.
+\LogGOPSim uses these traces to reproduce all communication dependencies,
+including indirect dependencies between processes which do not communicate
+directly.
+
+\LogGOPSim can also extrapolate traces from small application runs; a trace
+collected by running the application with $p$ processes can be extrapolated to
+simulate performance of the application running with $k\cdot p$ processes. The
+extrapolation produces exact communication patterns for MPI collective
+operations and approximates point-to-point
+communications~\cite{Hoefler:2010:LogGOPSim}.  The validation of \LogGOPSim and
+its trace extrapolation features have been documented
+previously~\cite{Hoefler:2010:LogGOPSim}, along with the simulators ability to
+accurately predict application performance in the presence of performance
+perturbations~\cite{Ferreira:2014:Understanding,Levy2013UsingSimulation,Hoefler:2010:Characterizing}
+
+\subsection{Simulating Applications with Correctable Errors}
+
+\kbf{Add application workloads}
