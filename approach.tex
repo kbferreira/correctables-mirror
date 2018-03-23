@@ -2,7 +2,60 @@
 \section{Experiential Approach}
 \label{sec:approach}
 
-\subsection{APEI Injection Framework}
+\subsection{APEI Error Injection}
+
+As stated previously, this work is focused on the impacts of correctable errors.
+These impacts occur at a number of different levels in the system.  To measure
+these impacts we need a method of injecting these errors in a system to measure
+the costs.  A number of methods exist to inject these types of errors on a
+running system: from hardware-specific DRAM daughter cards that synthetically
+flip memory cells within the DIMM device to methods that stress the memory
+system in an effort to induce failures. 
+
+In this work, we use the error injection table (EINJ) support provided as part
+of the Advanced Configuration and Power Interface (ACPI)
+specification~\cite{ACPISpec}.  EINJ provides a platform-independent interface
+through which the platform OS can inject hardware errors to the platform without
+requiring platform specific level software support. The primary goal of this
+mechanism is to support testing of the OS error handling stack. Through this
+capability the OS is able to implement a simple interface for diagnostic and
+validation of RAS handling on the system.  EINJ is not supported on 
+every production platform, it requires support from the host processor, OS, and
+firmware/BIOS.
+
+\begin{table}
+\centering
+\begin{tabular}{ c l }
+\toprule
+Error Type Value & Error Description \\
+\midrule
+ 0x00000001 & Processor Correctable\\
+ 0x00000002 & Processor Uncorrectable non-fatal \\
+ 0x00000004 & Processor Uncorrectable fatal \\
+ 0x00000008 & Memory Correctable \\
+ 0x00000010 & Memory Uncorrectable non-fatal \\
+ 0x00000020 & Memory Uncorrectable fatal \\
+ 0x00000040 & PCI Express Correctable \\
+ 0x00000080 & PCI Express Uncorrectable fatal \\
+ 0x00000100 & PCI Express Uncorrectable non-fatal \\
+ 0x00000200 & Platform Correctable \\
+ 0x00000400 & Platform Uncorrectable non-fatal \\
+ 0x00000800 & Platform Uncorrectable fatal \\
+\bottomrule
+\end{tabular}
+\vspace{.6em}
+\caption{
+        Available error types defined in ACPI specification 
+}
+\label{tab:einj}
+\end{table}
+
+The specification defines a number of different error types.  These types are
+defined in \Cref{tab:einj}.  On our test linux platform, only the memory
+correctable and memory uncorrectable error types are supported.  Injecting
+errors through the EINJ table on linux is done through the sysfs filesystem
+interface.  This injection interface allows a user to specifically the error type
+and memory address for the error.
 
 \subsection{Simulating Correctable Overheads}
 
