@@ -59,7 +59,7 @@ and memory address for the error.
 
 \subsection{Memory Failure Logging}
 
-\kbf{The following paragraph is nearly identical to parrellel submission,
+\kbf{The following paragraph is nearly identical to parallel submission,
 change}
 
 DRAM on typical modern systems is protected by an error-correcting
@@ -97,8 +97,13 @@ all forward progress while the memory configuration information is assembled and
 passed to system software~\cite{Gottscho:2016:Measuring}. SMM mode is expensive
 as it halts progress on \emph{all} cores on a node until the SMM mode is left.
 
-\kbf{Add details of how we use `selfish' to measure the overheads of these
-injecting errors}
+To measure the system impacts of the memory decoding and logging overheads, we
+use the \selfish~\cite{Hoefler:2010:Characterizing} system noise measurement
+microbenchmark. \selfish tracks chunks of time taken away from the CPU for
+system tasks (termed detours), by continuously reading the processor timestamp
+counter (TSC)~\cite{IntelGuide}.  When the counter has reading has exceeded a
+certain threshold~\footnote{In our case, 150 nanoseconds}, the time and duration
+of this detour is recorded.
 
 \subsection{Simulating Correctable Overheads}
 
