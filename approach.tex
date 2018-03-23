@@ -57,6 +57,49 @@ errors through the EINJ table on linux is done through the sysfs filesystem
 interface.  This injection interface allows a user to specifically the error type
 and memory address for the error.
 
+\subsection{Memory Failure Logging}
+
+\kbf{The following paragraph is nearly identical to parrellel submission,
+change}
+
+DRAM on typical modern systems is protected by an error-correcting
+codes~(ECC).  When the memory controller detects a memory error, it attempts to
+use the ECC to correct the error.  If it is able to correct the error, the
+error is recorded as a \emph{correctable error}~(CE).  If it is unable to
+correct the error, the error is recorded as a \emph{detected, uncorrectable
+error}~(UE).  Correctable errors are recorded in registers provided by the x86
+Machine Check Architecture~(MCA)~\cite{AMD,IntelGuide}.  The contents of these
+registers are polled periodically and written to the console log.
+Uncorrectable errors are recorded in an event log after the node is rebooted
+due to the occurrence of an uncorrected error.  For both correctable and
+uncorrectable errors, detailed information about each error can be recorded.
+This information includes the physical address where the error occurred and ECC
+syndrome data that describes the cause of the error.  Decoding the recorded
+information about each error allows us to identify the physical location of
+each logged error, but this decoding process takes time, perturbing application
+performance.
+
+For correctable errors, there are two ways that the processor can be notified of
+the error: software-based and firmware-based.  In the case of software-based
+notification, a Corrected Machine Check Interrupt
+(CMCI)~\cite{IntelGuide,Gottscho:2016:Measuring} is generated which records
+the DRAM error and the time of its occurrence. In this case, it may be difficult
+to determine the precise DRAM location of an error because of complexities related
+to memory organization~\cite{Gottscho:2016:Measuring}.  As a result, mitigating
+failures with memory page retirement~\cite{Tang:2006:Assessment} may not always
+be possible with CMCI-based reporting.  With firmware-based notification, the
+information recorded when the error occurs allows the physical address and the
+specific DRAM device to be determined.  Firmware-based notification relies on the
+Enhanced Machine Check Architecture (EMCA)~\cite{MCAEnhancements}.  While this
+method allows for precise identification of the source of the error, it is very
+expensive.  It requires the system to enter System Management Mode~(SMM) which halts
+all forward progress while the memory configuration information is assembled and
+passed to system software~\cite{Gottscho:2016:Measuring}. SMM mode is expensive
+as it halts progress on \emph{all} cores on a node until the SMM mode is left.
+
+\kbf{Add details of how we use `selfish' to measure the overheads of these
+injecting errors}
+
 \subsection{Simulating Correctable Overheads}
 
 In general, the communication structure of Message Passing Interface (MPI)
@@ -69,11 +112,12 @@ discrete-event simulation framework to evaluate the impact of local
 correctable error mitigation activities on the performance of real applications.
 %for real applications via their message traces.
 
-Our simulation-based approach models correctable error mitigation activities as CPU detours: periods
-of time during which the CPU is taken from the application and used to compute and commit
-checkpoint data.  This approach allows a level of
+Our simulation-based approach models correctable error mitigation activities as
+CPU detours: periods of time during which the CPU is taken from the application
+and used to compute and commit checkpoint data.  This approach allows a level of
 fidelity and control not always possible in implementation-based approaches. It
-also allows us to examine simulated systems much larger than those generally available.
+also allows us to examine simulated systems much larger than those generally
+available.
 
 Our simulation framework is based on the freely available
 \LogGOPSim~\cite{Hoefler:2010:LogGOPSim} and the tool chain provided  by Levy et
@@ -99,4 +143,5 @@ perturbations~\cite{Ferreira:2014:Understanding,Levy2013UsingSimulation,Hoefler:
 
 \subsection{Simulating Applications with Correctable Errors}
 
-\kbf{Add application workloads}
+\kbf{Add details how we link simulator and selfish traces}
+\kbf{Add application workloads here ...}
