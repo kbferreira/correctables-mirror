@@ -110,26 +110,82 @@ Log analysis install instructions:
 
 The {\texttt{configure\_apei.sh}} script checks and properly installs system
 software for error injection.  If script fails on any test, injection support is
-not supported on architecture.  Script shoudl be run on a Linux system, and with
-root privledges.
+not supported on architecture.  Script should be run on a Linux system, and with
+{\texttt{root}} privileges.
 
-\begin{Verbatim}[commandchars=\\\{\}]
- $ sudo ./configure_apei.sh
-   Checking kernel version: (3.10.100) \color{green}{PASS}
-   Checking kernel commandline:        \color{green}{PASS}
-   Checking for ACPI EINJ table: found \color{green}{PASS}
-   Checking for kernel modules:
-       ... loading einj kernl module   \color{green}{PASS}
-   Checking supported APEI error injection types:
-   0x00000008 Memory Correctable
-   0x00000010 Memory Uncorrectable non-fatal
-   0x00000020 Memory Uncorrectable fatal
-   0x00000040 PCI Express Correctable
-   0x00000080 PCI Express Uncorrectable non-fatal
-   0x00000100 PCI Express Uncorrectable fatal
-                                       \color{green}{PASS}
-   Test Complete: \color{green}{PASS}
+\begin{Verbatim}[commandchars=\\\{\},frame=single]
+ $ sudo configure_apei.sh
+Checking kernel version: 3.10.0-229 \color{green}{PASS}
+Checking kernel commandline:        \color{green}{PASS}
+Checking for ACPI EINJ table: found \color{green}{PASS}
+Checking for kernel modules:
+ ... loading einj module            \color{green}{PASS}
+Checking supported APEI error injection
+types:
+ 0x00000008 Memory Correctable
+ 0x00000010 Memory Uncorrectable
+non-fatal
+ 0x00000020 Memory Uncorrectable fatal
+ 0x00000040 PCI Express Correctable
+ 0x00000080 PCI Express Uncorrectable
+non-fatal
+ 0x00000100 PCI Express Uncorrectable
+fatal
+                                    \color{green}{PASS}
+Test Complete: \color{green}{PASS}
+\end{Verbatim}
 
+
+\subsubsection{Error Injection Utility}
+
+If the {\texttt{configure\_apei.sh}} script from the previous sections completes
+without error, error injection is possible on the platform.  The
+{\texttt{error\_inject.py}} script included in the repo can be used to to inject
+correctable (and detected, non -fatal uncorrectables as well).  Passing {\texttt{--help}}
+to the script provides a descrition of the options (must be run as
+{\texttt{root}} as well)
+
+\begin{Verbatim}[commandchars=\\\{\},frame=single]
+ $ ./error_inject.py --help
+usage: error_inject.py [-h] [-i INTERVAL]
+[-l LENGTH] [-c | -u] [-d] [-v]
+[-a ADDR [ADDR ...]]
+
+APEI error injection utility
+
+optional arguments:
+  -h, --help show this help
+message and exit
+  -i INTERVAL, --interval INTERVAL
+Periodic interval in seconds to inject
+memory errors
+  -l LENGTH, --length LENGTH Length
+in seconds to run application (default
+1200 secs)
+  -c, --dram-correctable Inject
+DRAM correctable error (default on)
+  -u, --dram-uncorrectable Inject
+DRAM uncorrectable error non-fatal
+(default off)
+  -d, --dry-run         Dry-run,
+do not actually inject the error
+(default off)
+  -v, --version         show
+program's version number and exit
+  -a ADDR [ADDR ...],
+  --addr ADDR [ADDR ...] List
+of address to inject into
+(default 0x12345000)
+ 
+\end{Verbatim}
+
+As an example, if we want to inject correctable memory errors at an interval of
+every 100 seconds, at addresses {\texttt{0x12345000}}, {\texttt{0x12346000}} and
+{\texttt{0x123457000}} for 1400 seconds.
+
+\begin{Verbatim}[commandchars=\\\{\},frame=single]
+ $ sudo ./error_inject.py -i 100 -l 1400
+-c -a 0x12345000 0x12346000 0x123457000
 \end{Verbatim}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
