@@ -244,16 +244,16 @@ Application & Description \tabularnewline
 \label{tab:app_desc}
 \end{table*}
 
-\begin{figure*}[ht!]
+\begin{figure}[ht!]
 \centering
-\begin{minipage}[t]{0.90\textwidth}
+%\begin{minipage}[t]{0.90\textwidth}
 \begin{algorithm}[H]
 \caption*{\textbf{Collective operation microbenchmark}}\label{alg:collectives}
 \begin{algorithmic}
 %\State{interval\_duration $\in \lbrace 50ms, 500ms, 5s, 50s\rbrace$}
-\State{collective\_operation $\in \lbrace$\texttt{7-point stencil}, \texttt{27-point stencil}, \\
-                                          \hspace{4.35cm}\MPIAllreduce, \MPIAlltoall, \\ 
-                                          \hspace{4.35cm}\MPIBcast, \MPIReduce$\rbrace$}
+        \State{collective\_operation $\in \lbrace$ \texttt{Stencil}\\
+                                          \hspace{2.35cm}\MPIAllreduce, \MPIAlltoall, \\ 
+                                          \hspace{2.35cm}\MPIBcast, \MPIReduce$\rbrace$}
 \State
 \Procedure{collective\_micro}{collective\_operation}
 \ForAll{intervals}
@@ -263,9 +263,9 @@ Application & Description \tabularnewline
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
-\end{minipage}
+%\end{minipage}
         \captionof{algorithm}{Pseudocode of collective operation microbenchmark.
         \kbf{Modify to match data}}
 \label{alg:microbenchmark}
-\end{figure*}
+\end{figure}
 
