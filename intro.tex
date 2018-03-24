@@ -40,13 +40,13 @@ Errors are typically classified into three categories: Correctable,
 Uncorrectable, and Fatal. Correctable errors (CE) are errors that can be
 corrected or recovered in hardware such that platform state is left as if no
 error had occurred.  An example of a CE is is a single bit (or single symbol in
-the case of chipkill) error.  Uncorrectable errors (UE) are those that could be
-detected by hardware, but could not be corrected.  Multi-bit/Multi-symbol errors
-are an example of such an error.  In many cases it is possible for the system to
-continue functioning in the face of these errors, perhaps with a certain amount
-of lost state.  Finally, fatal errors are those errors such that continuing
-after this error would make the system unreliable.  Fatal errors typically
-initiate a full system halt.
+the case of chipkill) error.  Detected, uncorrectable errors (DUE) are those
+that could be detected by hardware, but could not be corrected.
+Multi-bit/Multi-symbol errors are an example of such an error.  In many cases it
+is possible for the system to continue functioning in the face of these errors,
+perhaps with a certain amount of lost state.  Finally, fatal errors are those
+errors such that continuing after this error would make the system unreliable.
+Fatal errors typically initiate a full system halt.
 
 Recent works typically focus on uncorrectable and fatal errors, those errors that cause
 applications to restart.  However, the impacts of the most common error of

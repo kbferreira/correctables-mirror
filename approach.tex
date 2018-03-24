@@ -67,7 +67,7 @@ codes~(ECC).  When the memory controller detects a memory error, it attempts to
 use the ECC to correct the error.  If it is able to correct the error, the
 error is recorded as a \emph{correctable error}~(CE).  If it is unable to
 correct the error, the error is recorded as a \emph{detected, uncorrectable
-error}~(UE).  Correctable errors are recorded in registers provided by the x86
+error}~(DUE).  Correctable errors are recorded in registers provided by the x86
 Machine Check Architecture~(MCA)~\cite{AMD,IntelGuide}.  The contents of these
 registers are polled periodically and written to the console log.
 Uncorrectable errors are recorded in an event log after the node is rebooted
