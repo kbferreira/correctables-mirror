@@ -16,7 +16,7 @@ BBL          = $(notdir $(BIBSRC:.bib=.bbl))
 
 FIGS         = $(shell ls figs/*.eps figs/*.pdf)
 
-DEPS         = $(DEP) $(TEXSRC) $(BIBSRC) $(FIGS) all.bib
+DEPS         = $(DEP) $(TEXSRC) $(BIBSRC) $(FIGS) artifact/artifacts.tex all.bib
 
 all: plots $(PDF)
 

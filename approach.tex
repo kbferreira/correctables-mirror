@@ -32,7 +32,7 @@ Error Type Value & Error Description \\
  0x00000001 & Processor Correctable\\
  0x00000002 & Processor Uncorrectable non-fatal \\
  0x00000004 & Processor Uncorrectable fatal \\
- 0x00000008 & Memory Correctable \\
+        {\bf{0x00000008}} & {\bf{Memory Correctable}} \\
  0x00000010 & Memory Uncorrectable non-fatal \\
  0x00000020 & Memory Uncorrectable fatal \\
  0x00000040 & PCI Express Correctable \\
@@ -45,7 +45,8 @@ Error Type Value & Error Description \\
 \end{tabular}
 \vspace{.6em}
 \caption{
-        Available error types defined in ACPI specification 
+        Available error types defined in ACPI specification.  Highlighted value
+        used in this current work 
 }
 \label{tab:einj}
 \end{table}
@@ -146,10 +147,6 @@ previously~\cite{Hoefler:2010:LogGOPSim}, along with the simulators ability to
 accurately predict application performance in the presence of performance
 perturbations~\cite{Ferreira:2014:Understanding,Levy2013UsingSimulation,Hoefler:2010:Characterizing}
 
-The system parameters used for the simulation results in this work are shown in
-\Cref{tab:logp} and roughly correspond to a Cray XC40 architecture, a modern
-leadership-class HPC system..
-
 \begin{table}
 \centering
 \begin{tabular}{ l c }
@@ -172,24 +169,44 @@ LogGOPS parameter & Cray XC40 \\
 \label{tab:logp}
 \end{table}
 
-\subsection{Simulating Applications with Correctable Errors}
+\subsection{Simulation Setup and Reproducibility}
 
-\kbf{Add details how we link simulator and selfish traces}
+To generate the data presented in this paper, we collected execution traces for
+128 node runs for each applications described in \Cref{tab:app_desc} system.  We
+simulated the collected native traces~\footnote{All traces from non-export
+controlled application can found online, details in \Cref{sec:appendix}} with
+\LogGOPSim using parameters found in \Cref{tab:logp} which roughly correspond to
+a Cray XC40 architecture, a modern leadership class system. We then verified
+that the simulator accurately reproduces (within 6\%) the execution time on the
+respective system.
 
-In this work, we examine the performance of a number of HPC workloads.  These
-workloads, described in \Cref{tab:app_desc}, include three important DOE
-production applications (LAMMPS, CTH, and SPARC), an important HPC benchmark
-(HPCG), a proxy application (LULESH) from the Department of Energy's Exascale
-Co-Design Center for Materials in Extreme Environments~(ExMatEx), a scientific
-code used to study the behavior of subatomic particles~(MILC), and a
+We model correctable failures using the OS noise injection functionality of
+\LogGOPSim.  Using the error injection interface described previously, we
+characterize the cost of correctable logging and decoding under a number
+different scenarios.  Using costs measure in this work as well as costs
+detailed in previous works~\cite{Gottscho:2017:Measuring} along with previously
+published DRAM correctable error
+rates~\cite{Li10,Hwang12,Sridharan13,Bautista-Gomez:2016:Unprotected}, we create
+OS \emph{traces}~\footnote{Correctable error noise traces are also available
+online, details in \Cref{sec:appendix}} that simulate the cost of correctables
+while running the application trace.  Therefore, processes experiencing a
+correctable error will be appropriately delayed when injected along with any
+communicating processes, as detailed in \Cref{fig:propagation}.
+
+We examine the performance of a number of HPC workloads.  These workloads,
+described in \Cref{tab:app_desc}, include three important DOE production
+applications (LAMMPS, CTH, and SPARC), an important HPC benchmark (HPCG), a
+proxy application (LULESH) from the Department of Energy's Exascale Co-Design
+Center for Materials in Extreme Environments~(ExMatEx), a scientific code used
+to study the behavior of subatomic particles~(MILC), and a
 mini-application~(miniFE) from Sandia's Mantevo suite.  This is a diverse set of
 workloads that captures a wide range of computational methods and application
-behaviors.  It additionally captures a significant cross-section of the scalable,
-high-performance applications that are run on current extreme-scale systems as
-well as workloads that represent the computational patterns that are expected to
-be run on future systems.  Lastly, we also use a number of MPI collective
-microbenchnarks to examine collective algorithm impacts.  The pseudocode for
-these microbenchmarks can be found in \Cref{alg:microbenchmark}.
+behaviors.  It additionally captures a significant cross-section of the
+scalable, high-performance applications that are run on current extreme-scale
+systems as well as workloads that represent the computational patterns that are
+expected to be run on future systems.  Lastly, we also use a number of MPI
+collective microbenchnarks to examine collective algorithm impacts.  The
+pseudocode for these microbenchmarks can be found in \Cref{alg:microbenchmark}.
 
 \newcommand{\appDescWidth}{10.5cm}
 
