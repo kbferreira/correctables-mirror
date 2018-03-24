@@ -146,6 +146,32 @@ previously~\cite{Hoefler:2010:LogGOPSim}, along with the simulators ability to
 accurately predict application performance in the presence of performance
 perturbations~\cite{Ferreira:2014:Understanding,Levy2013UsingSimulation,Hoefler:2010:Characterizing}
 
+The system parameters used for the simulation results in this work are shown in
+\Cref{tab:logp} and roughly correspond to a Cray XC40 architecture, a modern
+leadership-class HPC system..
+
+\begin{table}
+\centering
+\begin{tabular}{ l c }
+\toprule
+LogGOPS parameter & Cray XC40 \\
+\midrule
+\textcolor{red}{L}atency                & 1.8$\mu s$ \\
+\textcolor{red}{o}verhead per message   & 12.4$\mu s$ \\
+\textcolor{red}{g}ap per message        & 2.6$\mu s$  \\
+\textcolor{red}{G}ap per byte           & 1$ns$     \\
+\textcolor{red}{O}verhead per byte      & 0$ns$     \\
+\textcolor{red}{S}: rendezvous threshold& 65,536 bytes \\
+\bottomrule
+\end{tabular}
+\vspace{.6em}
+\caption{
+  LogGOPS parameters used in our study which roughly correspond to a Cray
+  XC40 architectures.
+}
+\label{tab:logp}
+\end{table}
+
 \subsection{Simulating Applications with Correctable Errors}
 
 \kbf{Add details how we link simulator and selfish traces}
