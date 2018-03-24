@@ -110,10 +110,11 @@ Log analysis install instructions:
 
 The {\texttt{configure\_apei.sh}} script checks and properly installs system
 software for error injection.  If script fails on any test, injection support is
-not supported on architecture.  Script shoudl be run on a Linux system.
+not supported on architecture.  Script shoudl be run on a Linux system, and with
+root privledges.
 
 \begin{Verbatim}[commandchars=\\\{\}]
- $ ./configure_apei.sh
+ $ sudo ./configure_apei.sh
    Checking kernel version: (3.10.100) \color{green}{PASS}
    Checking kernel commandline:        \color{green}{PASS}
    Checking for ACPI EINJ table: found \color{green}{PASS}
