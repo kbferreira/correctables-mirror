@@ -175,4 +175,97 @@ LogGOPS parameter & Cray XC40 \\
 \subsection{Simulating Applications with Correctable Errors}
 
 \kbf{Add details how we link simulator and selfish traces}
-\kbf{Add application workloads here ...}
+
+In this work, we examine the performance of a number of HPC workloads.  These
+workloads, described in \Cref{tab:app_desc}, include three important DOE
+production applications (LAMMPS, CTH, and SPARC), an important HPC benchmark
+(HPCG), a proxy application (LULESH) from the Department of Energy's Exascale
+Co-Design Center for Materials in Extreme Environments~(ExMatEx), a scientific
+code used to study the behavior of subatomic particles~(MILC), and a
+mini-application~(miniFE) from Sandia's Mantevo suite.  This is a diverse set of
+workloads that captures a wide range of computational methods and application
+behaviors.  It additionally captures a significant cross-section of the scalable,
+high-performance applications that are run on current extreme-scale systems as
+well as workloads that represent the computational patterns that are expected to
+be run on future systems.  Lastly, we also use a number of MPI collective
+microbenchnarks to examine collective algorithm impacts.  The pseudocode for
+these microbenchmarks can be found in \Cref{alg:microbenchmark}.
+
+\newcommand{\appDescWidth}{10.5cm}
+
+\begin{table*}[ht!]
+\centering
+\begin{tabular}{@{}lc@{}}
+\toprule
+Application & Description \tabularnewline
+\midrule
+% NOTE: SNAP is not part of the current LAMMPS distribution
+%LAMMPS & \parbox{\appDescWidth}{Large-scale Atomic/Molecular Massively Parallel Simulator (LAMMPS).
+        LAMMPS & \parbox{\appDescWidth}{\tiny{A classical molecular dynamics simulator from Sandia National  
+                                Laboratories~\cite{Plimpton:1995:Fast, LAMMPS_web}.  The data presented in                           
+                                this paper are from experiments that use the Lennard-Jones (LAMMPS-lj)                               
+                                potential that is included with the LAMMPS distribution.}}\\
+  & \\                          
+%LULESH & \parbox{\appDescWidth}{Livermore Unstructured Lagrangian Explicit Shock Hydrodynamics (LULESH).  
+        LULESH & \parbox{\appDescWidth}{\tiny{A proxy application from the Department of Energy Exascale Co-Design Center
+                                for Materials in Extreme Environments (ExMatEx).  LULESH approximates the
+                                hydrodynamics equations discretely by partitioning the spatial problem domain
+                                into a collection of volumetric elements defined by a
+                                 mesh~\cite{LULESH_web}.}}\\
+  & \\
+        HPCG & \parbox{\appDescWidth}{\tiny{A benchmark that generates and solves a synthetic 3D sparse linear system using
+                              a local symmetric Gauss-Seidel preconditioned conjugate gradient
+                              method~\cite{HPCG_web}.}}\\
+  & \\
+        CTH & \parbox{\appDescWidth}{\tiny{A multi-material, large deformation, strong shock wave, solid mechanics
+                             code~\cite{McGlaun:1990:CTH, Hertel:93:CTH} developed at Sandia National 
+                             Laboratories.  The data presented in this paper are from experiments that use
+                             an input that describes the simulation of the detonation of a conical explosive
+                             charge (CTH-st).}}\\
+  & \\
+        MILC & \parbox{\appDescWidth}{\tiny{A large scale numerical simulation to study quantum chromodynamics~(QCD), the theory
+                              of the strong interactions of subatomic physics~\cite{MILC_web}.}}\\
+  & \\
+        miniFE & \parbox{\appDescWidth}{\tiny{A proxy application that captures the key behaviors of unstructured implicit
+                                finite element codes~\cite{Heroux09Mantevo}.}}\\
+  & \\
+        SPARC & \parbox{\appDescWidth}{\tiny{SPARC~\cite{Howard:2017:Sparc} is a next-generation compressible
+        computational fluid dynamics (CFD) code being developed by Sandia National Laboratories
+        as part of the NNSA's Advanced Technology Development and Mitigation (ATDM) subprogram.
+        SPARC solves the Navier-Stokes and Reynolds-Averaged Navier-Stokes (RANS turbulence models)
+        equations on structured and unstructured grids and is targeted towards the transonic flow
+        regime to support gravity bomb analyses and the hypersonic flow regime to analyze re-entry
+        vehicle analyses. In this work, the ``Generic Reentry Vehicle'' (GRV) input problem was
+        used.}}\\
+
+\bottomrule
+\end{tabular}
+\caption{Descriptions of the workloads used in evaluation.}
+\label{tab:app_desc}
+\end{table*}
+
+\begin{figure*}[ht!]
+\centering
+\begin{minipage}[t]{0.90\textwidth}
+\begin{algorithm}[H]
+\caption*{\textbf{Collective operation microbenchmark}}\label{alg:collectives}
+\begin{algorithmic}
+%\State{interval\_duration $\in \lbrace 50ms, 500ms, 5s, 50s\rbrace$}
+\State{collective\_operation $\in \lbrace$\texttt{7-point stencil}, \texttt{27-point stencil}, \\
+                                          \hspace{4.35cm}\MPIAllreduce, \MPIAlltoall, \\ 
+                                          \hspace{4.35cm}\MPIBcast, \MPIReduce$\rbrace$}
+\State
+\Procedure{collective\_micro}{collective\_operation}
+\ForAll{intervals}
+    \State \emph{execute} collective\_operation
+    \State \emph{sleep} $100ms$
+\EndFor
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+\end{minipage}
+        \captionof{algorithm}{Pseudocode of collective operation microbenchmark.
+        \kbf{Modify to match data}}
+\label{alg:microbenchmark}
+\end{figure*}
+
