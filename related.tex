@@ -25,14 +25,27 @@ al.}~\cite{Bautista-Gomez:2016:Unprotected} presented a study of DRAM memory
 errors on a large-scale system in the explicit absence of an ECC in an effort
 understand the behavior of raw memory failures.
 
-\kbf{Add letters paper and other SMM mode papers}
-
 Our study has origins in previous works that characterizes application behavior
 in the presence of OS
 noise~\cite{Ferreira:2008:Characterizing,Hoefler:2010:Characterizing}.
 Collectively, this research shows that the pattern of OS noise events determines
 the impact on application performance and the benefits of coordination.
 Moreover, it shows that the duration of an OS noise event can significantly
-slowdown application performance.
+slowdown application performance.  Additionally, Delgado and
+Karavanic~\cite{Delgado:2013:SMM} examined the impact of system management mode
+(SMM) interrupts on network and IO workloads.  Similarly, Macarenco {\it et
+al.}~\cite{Macarenco:2016:Effects} examine the impact of SMM mode for small
+scale NAS parallel benchmark runs and the UnixBench benchmark.
 
-\kbf{Add paragraph outlining distinction of this work}
+
+Most closely related, Gottscho {\it et al.}~\cite{Gottscho:2017:Measuring}
+examine the single-machine performance impacts of correctable DRAM errors for
+web search and SPEC CPU2006 benchmarks.  In this this work the authors
+demonstrate that an "avalanche" of these correctable errors can significantly
+impact benchmark performance.  Finally, using a proprietary hardware and
+software tool, the authors also characterize the impacts of DRAM correctable
+errors for Windows Server 2012 at a hardware, firmware, and OS level.
+
+\kbf{Add paragraph outlining distinction of this work: performance implication
+of correctables, principled look at freq and duration and the impact of MPI
+communication}

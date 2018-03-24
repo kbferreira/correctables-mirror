@@ -82,10 +82,10 @@ performance.
 For correctable errors, there are two ways that the processor can be notified of
 the error: software-based and firmware-based.  In the case of software-based
 notification, a Corrected Machine Check Interrupt
-(CMCI)~\cite{IntelGuide,Gottscho:2016:Measuring} is generated which records
+(CMCI)~\cite{IntelGuide,Gottscho:2017:Measuring} is generated which records
 the DRAM error and the time of its occurrence. In this case, it may be difficult
 to determine the precise DRAM location of an error because of complexities related
-to memory organization~\cite{Gottscho:2016:Measuring}.  As a result, mitigating
+to memory organization~\cite{Gottscho:2017:Measuring}.  As a result, mitigating
 failures with memory page retirement~\cite{Tang:2006:Assessment} may not always
 be possible with CMCI-based reporting.  With firmware-based notification, the
 information recorded when the error occurs allows the physical address and the
@@ -94,7 +94,7 @@ Enhanced Machine Check Architecture (EMCA)~\cite{MCAEnhancements}.  While this
 method allows for precise identification of the source of the error, it is very
 expensive.  It requires the system to enter System Management Mode~(SMM) which halts
 all forward progress while the memory configuration information is assembled and
-passed to system software~\cite{Gottscho:2016:Measuring}. SMM mode is expensive
+passed to system software~\cite{Gottscho:2017:Measuring}. SMM mode is expensive
 as it halts progress on \emph{all} cores on a node until the SMM mode is left.
 
 To measure the system impacts of the memory decoding and logging overheads, we
