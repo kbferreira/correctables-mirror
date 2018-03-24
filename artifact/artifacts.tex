@@ -188,6 +188,81 @@ every 100 seconds, at addresses {\texttt{0x12345000}}, {\texttt{0x12346000}} and
 -c -a 0x12345000 0x12346000 0x123457000
 \end{Verbatim}
 
+\subsubsection{Correctable Impacts Measurement}
+
+The \selfish utility included in the repo can be used to measure the impact of
+correctable errors.  \selfish is a C program that dependps on the
+{\texttt{gengetopt}}
+utility~\footnote{\url{https://www.gnu.org/software/gengetopt/gengetopt.html}},
+a C99 complient compiler, {\texttt{cmake}}, and an MPI library. \selfish is
+located in the {\texttt{tools/selfish}} directory of the repo.  Building and
+running is done as follows:
+
+
+\begin{Verbatim}[commandchars=\\\{\},frame=single]
+ $ cd tools/selfish
+ $ mkdir build
+ $ cd build
+ $ cmake ..
+ -- Found gengetopt: /opt/local/bin/
+gengetopt (2.22.6)
+ -- Performing Test HAVE_NB_ALLREDUCE -
+Success
+ -- Have MPI_Iallreduce(), we are good
+ -- Configuring done
+ -- Generating done
+ -- Build files have been written to:
+${PWD}/build
+ $ make 
+Scanning dependencies of target selfish
+ [ 83%] Building C object src/CMakeFiles/
+selfish.dir/cmdline.c.o
+ [ 91%] Building C object src/CMakeFiles/
+selfish.dir/selfish.c.o
+ [100%] Linking C executable selfish
+ [100%] Built target selfish
+
+\end{Verbatim}
+
+Passing the {\texttt{--help}} option to \selfish gives command line options
+
+\begin{Verbatim}[commandchars=\\\{\},frame=single]
+ $ selfish --help
+ usage: selfish [-h] [-t THRESHOLD]
+[-l LENGTH]
+
+OS jitter recording microbenchmark
+
+  -h, --help Print help and exit
+  -t, --threshold=INT Threshold.
+Values less then are not recorded
+(default= 150 nanoseconds)
+  -l, --length=INT Collection duration
+in seconds (default= 1200 seconds)
+
+\end{Verbatim}
+
+As an example, if we want to collect \selfish traces in $24$ cores on a node for
+1200 seconds, and using the default $150$ nanosecond threshold.
+
+\begin{Verbatim}[commandchars=\\\{\},frame=single]
+ $ mpirun -n 24 ./selfish -l 1200
+
+ Calibrated tps: [ 2.1e+09, 2.1e+09,
+2.1e+09 ]
+
+ Avg Bench Wall Time: 1200.44 secs.
+ Avg File Write Time: 0.36 secs.
+ Avg Total Kernel Time: 1200.00 secs.
+
+ Workload: Selfish.
+ Problem description: rtsc() threshold
+timing
+ Thresold: 150 nsecs (cycles: 314)
+
+ Datapoints: [ 926097, 966200, 996097 ]
+\end{Verbatim}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Experiment workflow}
 
