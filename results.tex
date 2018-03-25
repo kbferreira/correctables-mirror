@@ -62,9 +62,12 @@ native OS noise signature on the \blake system and a ``dry-run'' execution of
 our error injection utility.  The dry-run option of the injection utility
 configures the injection interface to triggers errors at the requested interval,
 in this case we arbitrarily chose every 10 seconds, but does not trigger the
-error.  From this figure we can see that the native noise and dry-run signature
-are nearly identical.  Therefore the injection framework does not impart any
-additional OS noise over the systems native signature.  
+error.  An OS noise event detected by \selfish is denoted by a spike in the
+figure, the X-Axis being the time the noise event occurred and the duration of
+the noise event being the amplitude on the Y-Axis.  From this figure we can see
+that the native noise and dry-run signature are nearly identical.  Therefore the
+injection framework does not impart any additional OS noise over the systems
+native signature.  
 
 \begin{figure*}
 \centering{
