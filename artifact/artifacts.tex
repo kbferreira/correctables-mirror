@@ -3,16 +3,24 @@
 \section{Artifact Description: \myTitle}
 \label{sec:appendix}
 
-\kbf{This is incorrect, a completely new folktale needs to be written}
+\kbf{This is close, some details need to be verified}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Abstract}
 
-This artifact contains instructions on accessing the \LogGOPSim simulator and
-the application execution traces that were used for the correctable DRAM error 
-logging overhead experiments in \refsec{sec:results:correctable_dram_perf}. 
-It also contains instructions on obtaining and using the failure log analysis
-scripts used throughout \refsec{sec:results}.
+This artifact contains instructions on accessing the the following
+data/utilities from the paper:
+\begin{itemize}
+        \item A script to properly configure the APEI error injection interface
+                used in this work (if supported by platform)
+        \item The error injection utility that injects errors at the period
+                specified.
+        \item The \selfish utility used to measure the overheads of the injected
+                correctable errors.
+        \item The \LogGOPSim simulator and application execution traces used for
+                the correctable DRAM error logging impacts  experiments 
+        \item The appropriate analysis and plotting scripts used in the paper
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Description}
@@ -21,29 +29,25 @@ scripts used throughout \refsec{sec:results}.
 
 {\small
 \begin{itemize}
-  \item {\bf Program}: C++ for \LogGOPSim, Python for log analysis
-  \item {\bf Compilation}: g++ 4.2+ for \LogGOPSim, Python 2.7+
-  \item {\bf Data set}: In this paper, we analyzed a corpus of failure data collected over
-  the five-year lifetime of \cielo.  This corpus of data consists primarily of the contents
-  of system logs.  A detailed description of the contents of these logs and the relevant 
-  data that each contains is presented in \refsec{sec:method:system_logs} in the body of the paper.
-
-  We also used a collection of application execution traces in our correctable DRAM error 
-  experiments.  The applications used were: LAMMPS-lj, LAMMPS-crack, LAMMPS-SNAP,
-  LULESH, miniFE, GTC-p, and CTH.  In addition, we also used execution traces for three 
-  microbenchmarks: allreduce, reduce, and stencil.
-  \item {\bf Run-time environment}: MacOS 10.8+ or any modern Linux distribution
-  \item {\bf Hardware}: Any
-  \item {\bf Experiment customization}: modify Makefile to specify different application
-  traces or reliability logs
-  \item {\bf Publicly available?}: All but one of the execution traces (CTH) is publicly 
-  available.  Because CTH is an export-controlled application, its traces cannot be 
-  released publicly.  
-
-  System logs collected on \cielo contain significant proprietary information that is 
-  covered by one or more non-disclosure agreements~(NDA).  As a result, we cannot publicly
-  release this corpus of data.  Our repository contains a sample of random data that can
-  be used to demonstrate the operation of our analysis scripts.
+        \item {\bf Program}: C++ for \LogGOPSim, C and {\texttt{cmake}} for
+                \selfish, Python (numpy and matplotlib) for error injection, and
+                {\texttt{bash}} for APEI configuration script.
+        \item {\bf Compilation}: g++ and gcc 4.2+ for \LogGOPSim and \selfish,
+                Python 2.7+ for the injection and analysis scripts.
+        \item {\bf Data set}: In this paper, we analyzed a collection of application
+                execution traces in our correctable DRAM error experiments.  The
+                applications used were: LAMMPS-lj, LAMMPS-crack, LAMMPS-SNAP,
+                LULESH, miniFE, SPARC, and CTH.  In addition, we also used execution
+                traces for three microbenchmarks: allreduce, reduce, and stencil
+                \kbf{Ensure these are correct}.
+        \item {\bf Run-time environment}: Any modern Linux distribution
+        \item {\bf Hardware}: Any for \LogGOPSim.  For DRAM Error INJection
+                (EINJ) testing, a platform that support ACPI 5.0+ is needed.
+        \item {\bf Experiment customization}: modify Makefile to specify different
+                application traces.
+        \item {\bf Publicly available?}: All but two of the execution traces
+                (CTH and SPARC) is publicly  available.  Because CTH and SPARC
+                are export-controlled, their traces cannot be released publicly.  
 \end{itemize}
 }
 
@@ -52,7 +56,7 @@ scripts used throughout \refsec{sec:results}.
 \item \LogGOPSim is available at:\\
     \url{https://htor.inf.ethz.ch/research/LogGOPSim/LogGOPSim-1.1.tgz}.  
 
-\item Failure log analysis scripts can be found in our repository at: 
+\item Error injection and \selfish scripts can be found in our repository at: 
     \detail{made up repo}
 \end{itemize}
 
@@ -63,12 +67,19 @@ largest application scale and duration that can be simulated depends on
 available RAM.  Memory usage increases linearly in both and scale and application
 runtime.
 
+The hardware error injection scripts can only be run on a platform which fully
+support the APEI interface defined in ACPI 5.0+ specification.  The majority of
+modern production hardware the authors has access to \emph{do not} fully support
+this specification.  Included in the repo (and detailed below) is a script to
+test and configure a platform for this testing, if supported.
+
 \subsubsection{Software dependencies}
 
 Application simulations were run on a supercomputer running Linux located at
-\detail{Sandia National Laboratories}.  Both \LogGOPSim and the log
-analysis scripts have been tested on Linux and MacOS running Python 2.7,
-Matplotlib 2.0.0, and g++ 4.2.1
+\detail{Sandia National Laboratories}. \LogGOPSim and the analysis scripts have
+been tested on Linux and MacOS running Python 2.7, Matplotlib 2.0.0, and g++/gcc
+4.2.1  The error injection scripts must be run on a modern Linux with a kernel
+version of 3.10 or greater.
 
 \subsubsection{Datasets}
 
@@ -92,17 +103,20 @@ LogGOPS parameter & Value\\
 \label{tab:logp}
 \end{table}
 
-Application traces used (excluding CTH) are located in the {\texttt{traces}} 
+Application traces used (excluding CTH and SPARC) are located in the {\texttt{traces}} 
 directory of our repository.  LogP parameters used are specified in \reftab{tab:logp}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Installation}
 
-Installation instructions are available at: \url{https://htor.inf.ethz.ch/research/LogGOPSim/}
+Installation instructions for \LogGOPSim is available at: \url{https://htor.inf.ethz.ch/research/LogGOPSim/}
 
-Log analysis install instructions:
+Error injection and analysis utilities installation instruction:
 
-{\texttt{\$ git clone \detail{A very fake repo}}}
+
+\begin{Verbatim}[commandchars=\\\{\},frame=single]
+ $ git clone \detail{A very fake repo}
+\end{Verbatim}
 
 \subsubsection{APEI Error INJection Installation (EINJ)}
 
@@ -189,10 +203,10 @@ every 100 seconds, at addresses {\texttt{0x12345000}}, {\texttt{0x12346000}} and
 \subsubsection{Correctable Impacts Measurement}
 
 The \selfish utility included in the repo can be used to measure the impact of
-correctable errors.  \selfish is a C program that dependps on the
+correctable errors.  \selfish is a C program that depends on the
 {\texttt{gengetopt}}
 utility~\footnote{\url{https://www.gnu.org/software/gengetopt/gengetopt.html}},
-a C99 complient compiler, {\texttt{cmake}}, and an MPI library. \selfish is
+a C99 compliant compiler, {\texttt{cmake}}, and an MPI library. \selfish is
 located in the {\texttt{tools/selfish}} directory of the repo.  Building and
 running is done as follows:
 
@@ -256,7 +270,7 @@ As an example, if we want to collect \selfish traces in $24$ cores on a node for
  Workload: Selfish.
  Problem description: rtsc() threshold
 timing
- Thresold: 150 nsecs (cycles: 314)
+ Threshold: 150 nsecs (cycles: 314)
 
  Datapoints: [ 926097, 966200, 996097 ]
 \end{Verbatim}
@@ -264,22 +278,29 @@ timing
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Experiment workflow}
 
-{\texttt{\$ make DRAM-overheads \# For \LogGOPSim runs and correctable DRAM plots}}
+\begin{Verbatim}[commandchars=\\\{\},frame=single]
+  $ make DRAM-overheads # For \LogGOPSim
+runs and correctable DRAM plots
+\end{Verbatim}
 
-{\texttt{\$ make analysis \# For log analysis plots}}
+\begin{Verbatim}[commandchars=\\\{\},frame=single]
+  $ make analysis # For analysis plots
+\end{Verbatim}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Evaluation and expected result}
 
-All generated figures will be placed in the {\texttt{figs}} directory
+All generated figures (excluding those from export-controlled applications) will
+be placed in the {\texttt{figs}} directory
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Experiment customization}
 
 New application traces can be added for analysis by adding the new trace
-directory to the {\texttt{TRACES}} variable in the top-level Makefile
+directory to the {\texttt{APPLICATION\_TRACES}} variable in the top-level Makefile
 
-New reliability logs can be added by modifying the {\texttt{LOG\_LOCATION}}
-variable in that same Makefile
+New DRAM correctable noise traces can be added by modifying the
+{\texttt{NOISE\_TRACES}} variable in that same Makefile
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Notes}
