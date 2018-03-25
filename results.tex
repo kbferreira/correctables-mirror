@@ -92,3 +92,127 @@ native signature.
 }
 \label{fig:DRAM_cost}
 \end{figure*}
+
+\kbf{Add details for \Cref{fig:DRAM_cost}}
+
+\subsection{Exploring Correctable Costs}
+
+\kbf{Add lots of data here ... it is running}
+
+\subsection{Impact of Scale}
+
+\kbf{Trim down all these figures ... and discuss results.  Also check which
+applications are here.  Prolly remove GTC and add SPARC}
+
+\begin{figure*}
+\centering{
+    \subfloat[Hardware Correction Impacts]{
+        \includegraphics[width=0.3\textwidth]{allHz_1.5e-7secs}
+        \label{fig:current:hardware}
+    }
+    \subfloat[Software-based Logging Impacts]{
+        \includegraphics[width=0.3\textwidth]{1.7857e-06Hz_0.00077secs}
+        \label{fig:current:cmca}
+    }
+    \subfloat[Firmware-based Logging Impacts]{
+        \includegraphics[width=0.3\textwidth]{1.7857e-06Hz_0.13secs}
+        \label{fig:current:firmware}
+    }}
+   \caption{\textbf{Performance impacts of correctable errors using the current
+                    correctable error rate from \cielo.  Three scenarios are shown:
+                    hardware only correction with no logging ($150ns$ per event),
+                    Software-based logging using the Corrected Machine Check
+                    Architecture (CMCA) ($775\mu sec$ per event), and the
+                    Firmware-based logging
+                    using the Enhanced Machine Check Architecture (EMCA)
+                    ($133msecs$ per event) }.
+   }
+\label{fig:current}
+\end{figure*}
+
+\begin{figure*}
+\centering{
+    \subfloat[Hardware Correction Impacts]{
+        \includegraphics[width=0.3\textwidth]{allHz_1.5e-7secs}
+        \label{fig:10X:hardware}
+    }
+    \subfloat[Software-based Logging Impacts]{
+        \includegraphics[width=0.3\textwidth]{1.7857e-05Hz_0.00077secs}
+        \label{fig:10X:cmca}
+    }
+    \subfloat[Firmware-based Logging Impacts]{
+        \includegraphics[width=0.3\textwidth]{1.7857e-05Hz_0.13secs}
+        \label{fig:10X:firmware}
+    }}
+   \caption{\textbf{Performance impacts of correctable errors using $10\times$ the current
+                    correctable error rate from \cielo.  Three scenarios are shown:
+                    hardware only correction with no logging ($150ns$ per event),
+                    Software-based logging using the Corrected Machine Check
+                    Architecture (CMCA) ($775\mu sec$ per event), and the
+                    Firmware-based logging
+                    using the Enhanced Machine Check Architecture (EMCA)
+                    ($133msecs$ per event) }.
+   }
+\label{fig:10X}
+\end{figure*}
+
+\begin{figure*}
+\centering{
+    \subfloat[Hardware Correction Impacts]{
+        \includegraphics[width=0.3\textwidth]{allHz_1.5e-7secs}
+        \label{fig:100X:hardware}
+    }
+    \subfloat[Software-based Logging Impacts]{
+        \includegraphics[width=0.3\textwidth]{0.00017857Hz_0.00077secs}
+        \label{fig:100X:cmca}
+    }
+    \subfloat[Firmware-based Logging Impacts]{
+        \includegraphics[width=0.3\textwidth]{0.00017857Hz_0.13secs}
+        \label{fig:100X:firmware}
+    }}
+   \caption{\textbf{Performance impacts of correctable errors using $100\times$ the current
+                    correctable error rate from \cielo.  Three scenarios are shown:
+                    hardware only correction with no logging ($150ns$ per event),
+                    Software-based logging using the Corrected Machine Check
+                    Architecture (CMCA) ($775\mu sec$ per event), and the
+                    Firmware-based logging
+                    using the Enhanced Machine Check Architecture (EMCA)
+                    ($133msecs$ per event) }.
+   }
+\label{fig:100X}
+\end{figure*}
+
+\begin{figure*}
+\centering{
+    \subfloat[Hardware Correction Impacts]{
+        \includegraphics[width=0.3\textwidth]{allHz_1.5e-7secs}
+        \label{fig:1000X:hardware}
+    }
+    \subfloat[Software-based Logging Impacts]{
+        \includegraphics[width=0.3\textwidth]{0.0017857Hz_0.00077secs}
+        \label{fig:1000X:cmca}
+    }
+    \subfloat[Firmware-based Logging Impacts]{
+        \includegraphics[width=0.3\textwidth]{0.0017857Hz_0.13secs}
+        \label{fig:1000X:firmware}
+    }}
+   \caption{\textbf{Performance impacts of correctable errors using $1000\times$ the current
+                    correctable error rate from \cielo.  Three scenarios are shown:
+                    hardware only correction with no logging ($150ns$ per event),
+                    Software-based logging using the Corrected Machine Check
+                    Architecture (CMCA) ($775\mu sec$ per event), and the
+                    Firmware-based logging
+                    using the Enhanced Machine Check Architecture (EMCA)
+                    ($133msecs$ per event) }.
+   }
+\label{fig:1000X}
+\end{figure*}
+
+
+\subsection{Exploring Correctable Frequency and Duration}
+
+\kbf{Add plots here ... }
+
+\subsection{Discussion and Analysis}
+
+\kbf{Add the applciation analysis stuff here}
