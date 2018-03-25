@@ -2,26 +2,59 @@
 \section{Results}
 \label{sec:results}
 
-\subsection{Correctable Impacts}
+In this section we outline the costs and impacts of DRAM correctable errors
+using the test infrastructure structure outlined in the previous sections.  First,
+we examine the correction, logging and decoding costs of these correctable
+errors.  This characterization defines the cost of each DRAM error under a number
+of different configuration.  Then, using this correctable error cost
+characterization and the fault rate measured in a number of published studies as
+a baseline, we demonstrate the performance impacts of correctable errors on
+current and future systems.
+
+\subsection{DRAM Correctable Costs}
+
+In this section we outline the cost of DRAM correctable on a modern HPC system.
+We are concerned with three costs: the hardware error correction costs (the cost
+of the ECC code to correct), logging/decoding in the OS, and logging/decoding in
+firmware.
+
+To carry out this testing, we use the \blake system located at \detail{Sandia
+National Laboratories}.  \blake is 48 node Intel Skylake system connected by
+\kbf{ADD network detail}.  Each node consists of 4, 24 core, 2.1GHz Intel
+Skylake processors (a total of 96 cores/node) and 175GB of DDR4 DRAM per node.
+This system is running Red Hat Enterprise Linux Server release 7.4 and a Linux
+3.10.693 version kernel.
+
+To inject correctable DRAM errors we use the Error INJection (EINJ) facility of
+the ACPI Platform Error Interface (APEI)~\cite{ACPISpec} described previously.
+We also use the \selfish operating system noise (or \emph{jitter}) measurement
+microbenchmark~\footnote{See appendix \Cref{sec:appendix} for further details on
+these utilities}.
 
 \begin{figure*}
 \centering{
-        \subfloat[Default "jitter"]{
+        \subfloat[Native OS Signature for \blake]{
                 \includegraphics[ width=0.45\textwidth ]
                         {blake-native-selfish-cpu0_dtr}
                 \label{blake:native}
         }
-        \subfloat[Dry Run "jitter"]{
+        \subfloat[``Dry Run'' Injection OS Signature ]{
                 \includegraphics[ width=0.45\textwidth ]
                         {blake-10sec-dry_run-selfish-cpu0_dtr}
                 \label{blake:dry-run}
         }
 }
 \caption{
-\kbf{ADD CAPTION}
+        Native and ``dry run'' OS noise signature for \blake.  The ''dry run''
+        option configures the EINJ interface at the requested frequency (in this
+        case every ten seconds) but does not trigger the error.  This attempts
+        to measure the cost of the error injection utility.  As can be seen from
+        the figure, the injection utility impacts no additional OS noise
 }
 \label{fig:baselines}
 \end{figure*}
+
+As we will be measuring the OS n 
 
 \begin{figure*}
 \centering{
