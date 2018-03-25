@@ -71,39 +71,24 @@ native signature.
 
 \begin{figure*}
 \centering{
-        \subfloat[EDAC]{
-                \includegraphics[ width=0.45\textwidth ]
-                        {blake-10sec-edac-selfish-cpu0_dtr}
-                \label{FF:EDAC}
+        \subfloat[Hardware Cost (All Logging Off)]{
+                \includegraphics[ width=0.3\textwidth ]
+                        {blake-all_loggin_off-selfish-cpu0_dtr}
+                \label{blake:off}
         }
-        \subfloat[EXTLOG]{
-                \includegraphics[ width=0.45\textwidth ]
-                        {blake-10sec-extlog-selfish-cpu0_dtr}
-                \label{FF:EXTLOG}
+        \subfloat[Software Cost (OS decoding)]{
+                \includegraphics[ width=0.3\textwidth ]
+                        {blake-10sec-edac-ignore_ce-log-correctable-selfish-cpu0_dtr}
+                \label{blake:OS_log}
         }
-}
-\caption{
-Firmware first APEI ``DRAM correctable'' error injection at a 10 second interval
-}
-\label{fig:FF:injection}
-\end{figure*}
-
-\begin{figure*}
-\centering{
-        \subfloat[EDAC]{
-                \includegraphics[ width=0.45\textwidth ]
-                        {blake-10sec-edac-ignore_ce-selfish-cpu0_dtr}
-                \label{ignore_ce:EDAC}
-        }
-        \subfloat[EXTLOG]{
-                \includegraphics[ width=0.45\textwidth ]
+        \subfloat[Firmware Cost (Firmware decoding)]{
+                \includegraphics[ width=0.3\textwidth ]
                         {blake-10sec-extlog-ignore_ce-selfish-cpu0_dtr}
-                \label{ignore_ce:EXTLOG}
+                \label{blake:FW_log}
         }
 }
 \caption{
-Firmware first APEI ``DRAM correctable'' error injection at a 10 second interval with
-        {\texttt{mca=ignore\_ce}, handling every $10^{th}$ error}
+        \kbf{ADD CAPTION}
 }
-\label{fig:FF:ignore_ce}
+\label{fig:DRAM_cost}
 \end{figure*}
