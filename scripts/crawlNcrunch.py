@@ -8,7 +8,12 @@ import argparse as ap
 import time as time
 import re
 
-data = {}
+simpledata = {}
+
+seen_freqs = set()
+seen_apps = set()
+seen_deltas = set()
+
 def printf(format, *args):
                 sys.stdout.write(format % args)
 
@@ -64,12 +69,13 @@ if __name__ == '__main__':
                         if( re.search( refile, file ) ):
                                 match = re.search( refile, file )
                                 APP = match.group( 1 )
+                                seen_apps.add( APP )
                                 FREQ = match.group( 2 )
+                                seen_freqs.add(FREQ)
                                 DELTA = match.group( 6 )
-                                printf( "Match found: APP(%s) FREQ(%g) DELTA(%g)\n",
-                                                APP,
-                                                float( FREQ ),
-                                                float( DELTA ) )
+                                seen_deltas.add(DELTA)
+                                log.debug( "Match found: APP(%s) FREQ(%g) DELTA(%g)\n" % 
+                                        ( APP, float( FREQ ), float( DELTA ) ) )
                                 
                                 log.debug( "Opening %s for searching\n" % f )
 
@@ -81,20 +87,39 @@ if __name__ == '__main__':
                                                                         refline,
                                                                         line )
                                                         PROC = match.group( 1 )
-                                                        MAX = match.group( 11 )
-                                                        printf( "\tPROC(%d) MAX(%g)\n",
+                                                        MIN = match.group( 2 )
+                                                        MEAN = match.group( 6 )
+                                                        MAX = match.group( 10 )
+                                                        log.debug( "\tPROC(%d) MAX(%g)\n"
+                                                                        % (
                                                                         int(
                                                                                 PROC
                                                                                 ),
                                                                         float(
                                                                                 MAX
                                                                                 )
-                                                                        )
-                                                        this_size = len( data )
-                                                        print this_size
-                                                        data[ this_size ] = {}
-                                                        data[ this_size ]['freq'] = FREQ
-                                                        data[ this_size ][ 'delta' ] = DELTA
-                                                        data[ this_size ][ 'app' ] = APP
-                                                        data[ this_size ][ 'p' ] = PROC
-                                                        data[ this_size ][ 'max' ] = MAX
+                                                                        ) )
+                                                        simpledata[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ] = MAX
+
+        printf( "Found %d data entries\n", len( simpledata ) )
+
+#        print simpledata
+
+        apps = sorted( seen_apps )
+        delta = sorted( seen_deltas, key=float )
+        freqs = sorted( seen_freqs )
+        for freq in freqs:
+                for nodes in [ "65536", "32768", "16384" ]:
+                        with open( freq + "_" + nodes + ".delta",
+                                        "w" ) as out:
+                                out.write( "Delta\t " + "\t ".join( apps ) + "\n" )
+                                for d in delta:
+                                        out.write( d + "\t " )
+                                        for a in apps:
+                                                try:
+                                                        value = simpledata[ "%s-%s-%s-%s" % ( freq, d, a, nodes ) ] 
+                                                except KeyError, e:
+                                                        value = '-'
+                                                out.write( str( value ) + "\t " )
+                                        out.write( "\n" )
+
