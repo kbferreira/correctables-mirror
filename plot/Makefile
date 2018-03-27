@@ -15,9 +15,18 @@ FIGSscaling = $(addprefix ${FIGS_DIR}/, $(SCALING_DIRS:../data/correctables/scal
 PATTERNscaling = $(subst Hz,%,${FIGSscaling})
 SCRIPTscaling = ./scaling.py
 
+DATAdelta = $(wildcard ../data/correctables/delta/*.delta)
+FIGSdelta = $(addprefix ${FIGS_DIR}/,$(DATAdelta:../data/correctables/delta/%.delta=%-apps-delta.pdf)) \
+            $(addprefix ${FIGS_DIR}/,$(DATAdelta:../data/correctables/delta/%.delta=%-micros-delta.pdf))
+PATTERNdelta = $(subst delta,%,${FIGSdelta})
+SCRIPTdelta  = ./delta.py
+
 print-%  : ; @echo $* = $($*)
 
-all: ${FIGSdetour} ${FIGSscaling}
+all: ${FIGSdetour} ${FIGSscaling} ${FIGSdelta}
+
+${PATTERNdelta}: ${DATAdelta} ${SCRIPTdelta}
+	${SCRIPTdelta}
 
 ${PATTERNscaling}: ${DATAscaling} ${SCRIPTscaling}
 	${SCRIPTscaling}
@@ -28,5 +37,5 @@ ${PATTERNdetour}: ${DATAdetour} ${SCRIPTdetour}
 print-%  : ; @echo $* = $($*)
 
 clean:
-	-rm -f ${FIGSdetour} ${FIGSscaling}
+	-rm -f ${FIGSdetour} ${FIGSscaling} ${FIGSdelta}
 	-rm -f ${FIGS_DIR}/*.pdf

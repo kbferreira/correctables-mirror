@@ -95,7 +95,7 @@ while mydata:
         plt.legend( loc = 'best' )
         plt.xlabel( "Duration (sec.)" )
         plt.ylabel( "Pecent Slowdown" )
-        plt.savefig( dest + config + "apps-delta.pdf" );
+        plt.savefig( dest + config + "-apps-delta.pdf" );
         plt.close()
 
 
@@ -145,7 +145,7 @@ while mydata:
         plt.legend( loc = 'best' )
         plt.xlabel( "Duration (sec.)" )
         plt.ylabel( "Pecent Slowdown" )
-        plt.savefig( dest + config + "micro-delta.pdf" );
+        plt.savefig( dest + config + "-micros-delta.pdf" );
         plt.close()
 
 
