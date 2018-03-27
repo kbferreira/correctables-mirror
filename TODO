@@ -1,4 +1,9 @@
+Add sparc to the scaling data
 
+
+fixed vol, vary freq and duration plots
+
+------  
 exponential interrival rather than fixed frequency
 
 ensure I understand and sweep all FW/BIOS memory settings
