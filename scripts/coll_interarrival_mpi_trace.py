@@ -27,6 +27,7 @@ for (appname, (directory,process_count)) in sorted(workloads.items()):
   with open(filename, "r") as f:
     outfile = open(appname + "-interarrival.txt", "w")
     outfile.write( "# " + filename + "\n")
+    outfile.write( " delta\t tstmp"\n")
 
     for i, line in enumerate( f ):
       mpi_op_match = mpi_op_re.match( line )
