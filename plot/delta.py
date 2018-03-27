@@ -31,6 +31,7 @@ files = [ f for f in os.listdir( indir )
 mydata = map( lambda x: os.path.join( indir, x ), files )
 
 apps = [ "cth-st", "hpcg", "lmps-lj", "lmps-snap", "sparc" ]
+micro = [ "allreduce", "reduce", "broadcast", "stencil_27pt" ]
 
 while mydata:
 
@@ -68,25 +69,25 @@ while mydata:
                                 ( HW_lower, ymin ), HW_upper - HW_lower,
                                   ymax - ymin, 
                                   linestyle='dotted',
-                                  alpha=0.5,
-                                  edgecolor = "#00FF00",
-                                  facecolor = "#00FF00",
+                                  alpha=0.3,
+                                  edgecolor = "#000000",
+                                  facecolor = "#000000",
                         ),
                         patches.Rectangle(
                                 ( OS_lower, ymin ), OS_upper - OS_lower,
                                   ymax - ymin, 
                                   linestyle='dotted',
-                                  alpha=0.5,
-                                  edgecolor = "#0000ff",
-                                  facecolor = "#0000ff",
+                                  alpha=0.3,
+                                  edgecolor = "#000000",
+                                  facecolor = "#000000",
                         ),
                         patches.Rectangle(
                                 ( FW_lower, ymin ), FW_upper - FW_lower,
                                   ymax - ymin, 
                                   linestyle='dotted',
-                                  alpha=0.5,
-                                  edgecolor = "#FF0000",
-                                  facecolor = "#FF0000",
+                                  alpha=0.3,
+                                  edgecolor = "#000000",
+                                  facecolor = "#000000",
                         )
         ]:
                 ax.add_patch( p )
@@ -94,7 +95,58 @@ while mydata:
         plt.legend( loc = 'best' )
         plt.xlabel( "Duration (sec.)" )
         plt.ylabel( "Pecent Slowdown" )
-        plt.savefig( dest + config + "-delta.pdf" );
+        plt.savefig( dest + config + "apps-delta.pdf" );
         plt.close()
+
+
+        fig, ax = plt.subplots()
+        ax.set_xscale( 'log', basex = 10 )
+
+        for i, a in enumerate( micro ):
+                mask = np.isfinite( data[ a ] )
+                the_min = min( data[ a ][ mask ] )
+                if  not the_min:
+                        continue
+                percent = [ ( x - the_min ) / the_min * 100.0
+                                for x in data[ a ][ mask ] ]
+                plt.plot( data[ "Delta" ][ mask ],
+                        percent, 
+                        lw = 1,
+                        label = a )
+        ymin, ymax = plt.ylim()
+        for p in [
+                        patches.Rectangle(
+                                ( HW_lower, ymin ), HW_upper - HW_lower,
+                                  ymax - ymin, 
+                                  linestyle='dotted',
+                                  alpha=0.3,
+                                  edgecolor = "#000000",
+                                  facecolor = "#000000",
+                        ),
+                        patches.Rectangle(
+                                ( OS_lower, ymin ), OS_upper - OS_lower,
+                                  ymax - ymin, 
+                                  linestyle='dotted',
+                                  alpha=0.3,
+                                  edgecolor = "#000000",
+                                  facecolor = "#000000",
+                        ),
+                        patches.Rectangle(
+                                ( FW_lower, ymin ), FW_upper - FW_lower,
+                                  ymax - ymin, 
+                                  linestyle='dotted',
+                                  alpha=0.3,
+                                  edgecolor = "#000000",
+                                  facecolor = "#000000",
+                        )
+        ]:
+                ax.add_patch( p )
+
+        plt.legend( loc = 'best' )
+        plt.xlabel( "Duration (sec.)" )
+        plt.ylabel( "Pecent Slowdown" )
+        plt.savefig( dest + config + "micro-delta.pdf" );
+        plt.close()
+
 
 
