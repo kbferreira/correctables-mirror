@@ -22,7 +22,9 @@ if __name__ == '__main__':
         parser = ap.ArgumentParser( description = 'Simple correctable memory data collection' )
 
         parser.add_argument( '-i', '--input', nargs='+', default = [ "." ],
-                help = 'List directories and address to search (default ./)' )
+                help = 'List of directories and address to search (default ./)' )
+        parser.add_argument( '-o', '--output', default = ".",
+                help = 'Place data files in output directory (default ./)' )
         
         args = parser.parse_args()
 
@@ -32,6 +34,7 @@ if __name__ == '__main__':
         )
 
         mypath = args.input
+        outpath = args.output
 
         while mypath:
 
@@ -109,8 +112,8 @@ if __name__ == '__main__':
         delta = sorted( seen_deltas, key=float )
         freqs = sorted( seen_freqs )
         for freq in freqs:
-                for nodes in [ "65536", "32768", "16384" ]:
-                        with open( freq + "_" + nodes + ".delta",
+                for nodes in [ "65536", "32768", "16384", "16000" ]:
+                        with open( outpath + "/" + freq + "_" + nodes + ".delta",
                                         "w" ) as out:
                                 out.write( "Delta\t " + "\t ".join( apps ) + "\n" )
                                 for d in delta:
