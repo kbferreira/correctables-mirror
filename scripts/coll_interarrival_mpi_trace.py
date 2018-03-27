@@ -11,11 +11,23 @@ import math
 
 mpi_op_re = re.compile("^(MPI\_(Bcast|Allreduce|Reduce|Barrier|Scan|Reduce_scatter|Alltoall|Allgather|Allgatherv|Exscan)):(\d+):")
 
-root_trace_dir = "./"
+root_trace_dir = "/lscratch1/kbferre/app-traces/mutrino/"
 
 workloads = {}
 # EXAMPLE : workloads["MCCK"] = ("mcck/traces", 216)
-workloads["lmps-lj" ] = ("lmps-lj", 128)
+workloads[ "allreduce" ] = ( "allreduce", 128 )
+workloads[ "broadcast" ] = ( "broadcast", 128 )
+workloads[ "cth-st" ] = ( "cth-st", 128 )
+workloads[ "hpcg" ] = ( "hpcg", 128 )
+workloads[ "lmps-lj" ] = ( "lmps-lj", 128 )
+workloads[ "lmps-snap" ] = ( "lmps-snap", 128 )
+workloads[ "lulesh" ] = ( "lulesh", 125 )
+workloads[ "mcck" ] = ( "mcck", 125 )
+workloads[ "milc" ] = ( "milc", 128 )
+workloads[ "miniFE" ] = ( "miniFE", 128 )
+workloads[ "reduce" ] = ( "reduce", 128 )
+workloads[ "sparc" ] = ( "sparc", 128 )
+workloads[ "stencil_27pt" ] = ( "sparc", 128 )
 
 for (appname, (directory,process_count)) in sorted(workloads.items()):
   coll_inter = {}
@@ -27,7 +39,7 @@ for (appname, (directory,process_count)) in sorted(workloads.items()):
   with open(filename, "r") as f:
     outfile = open(appname + "-interarrival.txt", "w")
     outfile.write( "# " + filename + "\n")
-    outfile.write( " delta\t tstmp"\n")
+    outfile.write( " delta\t tstmp\n")
 
     for i, line in enumerate( f ):
       mpi_op_match = mpi_op_re.match( line )
