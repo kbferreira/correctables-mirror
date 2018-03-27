@@ -8,7 +8,9 @@ import argparse as ap
 import time as time
 import re
 
-simpledata = {}
+data_max = {}
+data_mean = {}
+data_min = {}
 
 seen_freqs = set()
 seen_apps = set()
@@ -102,11 +104,20 @@ if __name__ == '__main__':
                                                                                 MAX
                                                                                 )
                                                                         ) )
-                                                        simpledata[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ] = MAX
+                                                        data_max[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ] = MAX
+                                                        data_mean[ "%s-%s-%s-%s"
+                                                                        % (
+                                                                                FREQ,
+                                                                                DELTA,
+                                                                                APP,
+                                                                                PROC
+                                                                                )
+                                                                        ] = MEAN
+                                                        data_min[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ] = MIN
 
-        printf( "Found %d data entries\n", len( simpledata ) )
+        printf( "Found %d data entries\n", len( data_max ) )
 
-#        print simpledata
+#        print data_max
 
         apps = sorted( seen_apps )
         delta = sorted( seen_deltas, key=float )
@@ -120,7 +131,7 @@ if __name__ == '__main__':
                                         out.write( d + "\t " )
                                         for a in apps:
                                                 try:
-                                                        value = simpledata[ "%s-%s-%s-%s" % ( freq, d, a, nodes ) ] 
+                                                        value = data_max[ "%s-%s-%s-%s" % ( freq, d, a, nodes ) ] 
                                                 except KeyError, e:
                                                         value = '-'
                                                 out.write( str( value ) + "\t " )
