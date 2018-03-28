@@ -104,16 +104,26 @@ if __name__ == '__main__':
                                                                                 MAX
                                                                                 )
                                                                         ) )
-                                                        data_max[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ] = MAX
-                                                        data_mean[ "%s-%s-%s-%s"
-                                                                        % (
-                                                                                FREQ,
-                                                                                DELTA,
-                                                                                APP,
-                                                                                PROC
-                                                                                )
-                                                                        ] = MEAN
-                                                        data_min[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ] = MIN
+                                                        try:
+                                                                prev = data_max[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ]
+                                                        except KeyError, e:
+                                                                prev = None
+                                                        if( ( prev == None ) or ( prev < MAX ) ):
+                                                                data_max[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ] = MAX
+
+                                                        try:
+                                                                prev = data_mean[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ]
+                                                        except KeyError, e:
+                                                                prev = None
+                                                        if( ( prev == None ) or ( prev < MEAN ) ):
+                                                                data_mean[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ] = MEAN
+
+                                                        try:
+                                                                prev = data_min[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ]
+                                                        except KeyError, e:
+                                                                prev = None
+                                                        if( ( prev == None ) or ( prev > MIN ) ):
+                                                                data_min[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ] = MIN
 
         printf( "Found %d data entries\n", len( data_max ) )
 
