@@ -61,5 +61,5 @@ ${PATTERNdetour}: ${DATAdetour} ${SCRIPTdetour}
 print-%  : ; @echo $* = $($*)
 
 clean:
-	-rm -f ${FIGSdetour} ${FIGSscaling} ${FIGSdelta}
+	-rm -f ${FIGSdetour} ${FIGSscaling} ${FIGSdelta} ${FIGS5HZ} ${FIGSFreq} ${FIGSDelta5HZ}
 	-rm -f ${FIGS_DIR}/*.pdf
