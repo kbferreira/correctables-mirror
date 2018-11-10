@@ -4,6 +4,21 @@ FIGS_DIR =../figs
 
 DIRS = $(sort $(dir $(wildcard ../data/*/*/)))
 
+DATA5HZ = $(wildcard ../data/bursty-5Hz/*.scale)
+FIGS5HZ = $(addprefix ${FIGS_DIR}/, $(notdir $(DATA5HZ:.scale=-apps-scale.pdf)))
+PATTERN5HZ = $(subst 5Hz,%,${FIGS5HZ})
+SCRIPT5HZ = ./scale.py
+
+DATAFreq = $(wildcard ../data/bursty-775us/*.freq)
+FIGSFreq = $(addprefix ${FIGS_DIR}/, $(notdir $(DATAFreq:.freq=-apps-freq.pdf)))
+PATTERNFreq = $(subst nodes,%,${FIGSFreq})
+SCRIPTFreq = ./freq.py
+
+DATADelta5HZ = $(wildcard ../data/bursty-5Hz/*.delta)
+FIGSDelta5HZ = $(addprefix ${FIGS_DIR}/, $(notdir $(DATADelta5HZ:.delta=-apps-delta.pdf)))
+PATTERNDelta5HZ = $(subst nodes,%,${FIGSDelta5HZ})
+SCRIPTDelta5HZ = ./delta5hz.py
+
 DATAdetour = $(wildcard ../data/DRAM-correctable-einj/*/*.data)
 FIGSdetour = $(addprefix ${FIGS_DIR}/, $(notdir $(DATAdetour:.data=_dtr.eps)))
 PATTERNdetour = $(subst selfish,%,${FIGSdetour})
@@ -23,7 +38,16 @@ SCRIPTdelta  = ./delta.py
 
 print-%  : ; @echo $* = $($*)
 
-all: ${FIGSdetour} ${FIGSscaling} ${FIGSdelta}
+all: ${FIGSdetour} ${FIGSscaling} ${FIGSdelta} ${FIGS5HZ} ${FIGSFreq} ${FIGSDelta5HZ}
+
+${PATTERN5HZ}: ${DATA5HZ} ${SCRIPT5HZ}
+	${SCRIPT5HZ}
+
+${PATTERNFreq}: ${DATAFreq} ${SCRIPTFreq}
+	${SCRIPTFreq}
+
+${PATTERNDelta5HZ}: ${DATADelta5HZ} ${SCRIPTDelta5HZ}
+	${SCRIPTDelta5HZ}
 
 ${PATTERNdelta}: ${DATAdelta} ${SCRIPTdelta}
 	${SCRIPTdelta}

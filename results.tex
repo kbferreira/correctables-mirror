@@ -276,6 +276,52 @@ applications are here.  Prolly remove GTC and add SPARC}
 \label{fig:1000X}
 \end{figure*}
 
+\subsection{One Bursty Node}
+\begin{figure*}
+\centering{
+    \subfloat[Hardware Correction Impacts]{
+            \includegraphics[width=0.3\textwidth]{{5Hz_1.5e-07sec-apps-scale}}
+        \label{fig:hardware}
+    }
+    \subfloat[Software-based Logging Impacts]{
+            \includegraphics[width=0.3\textwidth]{{5Hz_0.000755sec-apps-scale}}        \label{fig:cmca}
+    }
+    \subfloat[Firmware-based Logging Impacts]{
+            \includegraphics[width=0.3\textwidth]{{5Hz_0.133sec-apps-scale}}
+        \label{fig:firmware}
+    }}
+       \caption{\textbf{Performance impacts of one 5HZ bursty correctable error
+                    node. Three scenarios are shown:
+                    hardware only correction with no logging ($150ns$ per event),
+                    Software-based logging using the Corrected Machine Check
+                    Architecture (CMCA) ($775\mu sec$ per event), and the
+                    Firmware-based logging
+                    using the Enhanced Machine Check Architecture (EMCA)
+                    ($133msecs$ per event) }.
+   }
+\end{figure*}
+
+\begin{figure*}
+\centering{
+        \includegraphics[width=0.8\textwidth]{{0.000775sec_16384nodes-apps-freq}}
+    }
+   \label{fig:775us}
+   \caption{\textbf{Performance impacts of  bursty correctable errors for
+        Software-based logging using the Corrected Machine Check
+                    Architecture (CMCA) ($775\mu sec$ per event) for a
+                    number of frequencies from 5Hz to 50KHz}
+   }
+\end{figure*}
+
+\begin{figure*}
+\centering{
+        \includegraphics[width=0.8\textwidth]{{5Hz_16384nodes-apps-delta}}
+    }
+   \label{fig:5Hz:delta}
+   \caption{\textbf{Performance impacts of bursty correctable errors at
+        5Hz as a function of the cost per event.}
+   }
+\end{figure*}
 
 \subsection{Exploring Correctable Frequency and Duration}
 
