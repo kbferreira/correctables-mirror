@@ -24,10 +24,11 @@ failures from client and server systems~\cite{Siddiqua13}.  Sridharan {\it et
 al.}~studied DRAM and SRAM faults, with a focus on positional and vendor
 effects~\cite{Sridharan13}.  Di Martino {\it et al.}~studied failures in Blue
 Waters, an HPC system at the University of Illinois,
-Urbana-Champaign~\cite{bluewaters}.  Finally, Bautista-Gomez {\it et
+Urbana-Champaign~\cite{bluewaters}.  Additionally, Bautista-Gomez {\it et
 al.}~\cite{Bautista-Gomez:2016:Unprotected} presented a study of DRAM memory
 errors on a large-scale system in the explicit absence of an ECC in an effort
-understand the behavior of raw memory failures.
+understand the behavior of raw memory failures. \kbf{ADD Christian's SC17 paper}.
+Finally, \kbf{ADD our SC18 paper}
 
 Our study has origins in previous works that characterizes application behavior
 in the presence of OS
@@ -50,15 +51,18 @@ impact benchmark performance.  Finally, using a proprietary hardware and
 software tool, the authors also characterize the impacts of DRAM correctable
 errors for Windows Server 2012 at a hardware, firmware, and OS level.
 
+
+\kbf{Strengthen this paragraph on why we are novel{
+
 Our work distinguishes itself from these existing studies in server al important
 ways.  First, to the best of our knowledge this is the first study to examine
-the performance impacts of \emph{correctable} DRAM errors.  Much of the existing
+the HPC performance impacts of \emph{correctable} DRAM errors.  Much of the existing
 work is focused on either characterizing failures or examining the application
 performance implication of DUEs. In addition, unlike previous work, we attempt a
 principled analysis of the correctable error rate increases likely with future
 systems as well as the importance of reducing the duration of each memory error
 event.  Finally, we examine how an applications communication dependencies,
 particularly its collective communication, influence the impacts from correctable
-errors.
+errors \kbf{ADD brief application analysis?}.
 
 \kbf{Anything more to add here?}

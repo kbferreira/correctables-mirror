@@ -286,5 +286,34 @@ Application & Description \tabularnewline
 \label{alg:microbenchmark}
 \end{figure}
 
-\subsection{Simulated CE Error Rates}}
+\subsection{Simulated Correctable Error Rates}
+
 \kbf{Add a discussion and justification here for rates we use} 
+
+\begin{table}
+\centering
+\begin{tabular}{ c l }
+\toprule
+        System & Mean Error Rate (Hz) \\
+\midrule
+        Facebook Servers & Processor Correctable\\
+ 0x00000002 & Processor Uncorrectable non-fatal \\
+ 0x00000004 & Processor Uncorrectable fatal \\
+        {\bf{0x00000008}} & {\bf{Memory Correctable}} \\
+ 0x00000010 & Memory Uncorrectable non-fatal \\
+ 0x00000020 & Memory Uncorrectable fatal \\
+ 0x00000040 & PCI Express Correctable \\
+ 0x00000080 & PCI Express Uncorrectable fatal \\
+ 0x00000100 & PCI Express Uncorrectable non-fatal \\
+ 0x00000200 & Platform Correctable \\
+ 0x00000400 & Platform Uncorrectable non-fatal \\
+ 0x00000800 & Platform Uncorrectable fatal \\
+\bottomrule
+\end{tabular}
+\vspace{.6em}
+\caption{
+        Measured and hypothesized cortectable error rates
+}
+\label{tab:CE_rate}
+\end{table}
+
