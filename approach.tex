@@ -169,7 +169,7 @@ LogGOPS parameter & Cray XC40 \\
 \label{tab:logp}
 \end{table}
 
-\subsection{Simulation Setup and Reproducibility}
+\subsection{Simulation Setup and Repeatability}
 
 To generate the data presented in this paper, we collected execution traces for
 128 node runs for each applications described in \Cref{tab:app_desc} system.  We
@@ -290,30 +290,24 @@ Application & Description \tabularnewline
 
 \kbf{Add a discussion and justification here for rates we use} 
 
-\begin{table}
-\centering
-\begin{tabular}{ c l }
-\toprule
-        System & Mean Error Rate (Hz) \\
-\midrule
-        Facebook Servers & Processor Correctable\\
- 0x00000002 & Processor Uncorrectable non-fatal \\
- 0x00000004 & Processor Uncorrectable fatal \\
-        {\bf{0x00000008}} & {\bf{Memory Correctable}} \\
- 0x00000010 & Memory Uncorrectable non-fatal \\
- 0x00000020 & Memory Uncorrectable fatal \\
- 0x00000040 & PCI Express Correctable \\
- 0x00000080 & PCI Express Uncorrectable fatal \\
- 0x00000100 & PCI Express Uncorrectable non-fatal \\
- 0x00000200 & Platform Correctable \\
- 0x00000400 & Platform Uncorrectable non-fatal \\
- 0x00000800 & Platform Uncorrectable fatal \\
-\bottomrule
-\end{tabular}
-\vspace{.6em}
-\caption{
-        Measured and hypothesized cortectable error rates
-}
-\label{tab:CE_rate}
+\kbf{Median might be a better value in the table below as the distribution is
+skewed (errors coming from lots of "noisy" nodes), but that is more difficult
+to determine}
+
+\begin{table} 
+        \centering 
+        \begin{tabular}{ l c } 
+         \toprule
+               System & CEs / node / year\\
+         \midrule
+                Schroeder et al~\cite{Schroeder:09:dram}  & 22,696 \\
+                Facebook~\cite{meza:2015:revisiting} & 5964\\ % median 108 CEs/ node / year
+         \bottomrule
+        \end{tabular}
+        \vspace{.6em}
+        \caption{ 
+                Measured and hypothesized correctable error rates
+        }
+        \label{tab:CE_rate}
 \end{table}
 
