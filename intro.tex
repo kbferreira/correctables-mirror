@@ -69,17 +69,18 @@ paper we present in-depth analyses that reveal how the interplay between
 application and hardware/firmware/OS correctable activities impact performance.
 We anticipate that this interplay will become increasingly more important as
 node counts and memory volumes increase dramatically on future extreme-scale
-systems, further increasing error rates.  Additionally, smaller feature sizes,
-manufacturing variances, hardware aging effects, and sub-threshold logic have
-the potential to further exacerbate this problem and increase the correctable
-and uncorrectable error rates.  More specifically, using a wide array of
-applications, we demonstrate that the overheads associated with  correctable
-errors can have a significant impact on overall application performance.  These
-local correctable errors introduce overheads that can amplified or absorbed
-globally by an application depending on an application's communication
-activities.  We use profiles of these communication activities as well as
-microbenchmark studies to more precisely attribute each application's
-performance to its communication operations.
+systems, further increasing error rates. \kbf{beef up justification for
+following sentence to justify increased rates} Additionally, smaller feature
+sizes, manufacturing variances, changing memory protection technology, hardware
+aging effects, and sub-threshold logic have the potential to further exacerbate
+this problem and increase the correctable and uncorrectable error rates.  More
+specifically, using a wide array of applications, we demonstrate that the
+overheads associated with  correctable errors can have a significant impact on
+overall application performance.  These local correctable errors introduce
+overheads that can amplified or absorbed globally by an application depending
+on an application's communication activities.  We use profiles of these
+communication activities as well as microbenchmark studies to more precisely
+attribute each application's performance to its communication operations.
 
 The possibly of correctable error activities inducing delays amongst application
 processes, including those that do not directly communicate, is analogous to the
@@ -101,7 +102,7 @@ communicate with.  The key point is that delays due to correctable error
 activities can propagate based on communication dependencies in the application.
 
 Based on the studies presented in this paper, we make the following
-contributions:
+contributions \kbf{Contributions need revisiting}:
 
 \begin{itemize}
 
@@ -110,7 +111,7 @@ contributions:
         based on platform configuration \S{?};
 
 \item we analyze the potential impacts of this correctable errors on application
-        performance.  We deomstrate that he performance impact of logging
+        performance.  We demonstrate that he performance impact of logging
                 correctable DRAM errors is modest at error rates observed on
                 current system.  In addition, we show these impacts change with
                 increased error rates \S\S{?};
