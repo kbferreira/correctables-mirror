@@ -1,5 +1,6 @@
 % R&A Tracking number: 
-\documentclass[conference]{IEEEtran}
+\documentclass[sigconf,review]{acmart}
+
 \usepackage{url}
 \usepackage{amsmath}
 \usepackage{caption}
@@ -41,6 +42,10 @@
 \input{defs}
 \hyphenation{op-tical net-works semi-conduc-tor}
 
+\acmConference[SC'19]{The International Conference for High Performance
+Computing, Networking, Storage and Analysis}{November 17--22}{Denver, CO}
+
+\setcopyright{none}
 
 \begin{document}
 \title{Understanding the Effects of Correctable Errors at Scale}
@@ -50,19 +55,14 @@
 Kurt B. Ferreira\IEEEauthorrefmark{1},
 Scott Levy\IEEEauthorrefmark{1},
 Nathan DeBardeleben\IEEEauthorrefmark{2},
-Elisabeth Baseman\IEEEauthorrefmark{2},
-Taniya Siddiqua\IEEEauthorrefmark{3},
-Vilas Sridharan\IEEEauthorrefmark{3}, \\
+Sean Blanchard\IEEEauthorrefmark{2},
 Victor Kuhns\IEEEauthorrefmark{1},
 }
 \IEEEauthorblockA{\IEEEauthorrefmark{1}Center for Computing Research, Sandia National Laboratories\\
 \email{{sllevy, kbferre,vgkuhns}@sandia.gov}}
 \IEEEauthorblockA{\IEEEauthorrefmark{2}
 Ultrascale Systems Research Center, Los Alamos National Laboratory\\
-\email{{ndebard,lissa}@lanl.gov}}
-\IEEEauthorblockA{\IEEEauthorrefmark{3}
-RAS Architecture, Advanced Micro Devices, Inc.\\
-\email{{taniya.siddiqua, vilas.sridharan}@amd.com}}
+\email{{ndebard,sblanchard}@lanl.gov}}
 } % end AUTHOR block
 }
 
