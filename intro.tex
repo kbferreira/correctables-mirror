@@ -2,6 +2,9 @@
 \section{Introduction}
 \label{sec:intro}
 
+\kbf{Some of these paragraphs may need to be shuffled a bit, order may not be the
+most logical}
+
 \kbf{Following paragraph is nearly identical to parallel submission}
 
 Maintaining the performance of high-performance computing~(HPC) applications as
@@ -17,22 +20,23 @@ activation of a large number of memory devices (four times more than
 less-protective techniques like single error correct double error
 detect~(SECDED))~\cite{Jian13}.  Activating more memory devices requires more
 power for each memory access.  However, because of tightening power budgets on
-next-generation systems~\cite{Bergman08exascalecomputing}, it is not yet clear
-that chipkill-correct will continue to be viable.  Reduced device-feature sizes
-also have the potential to result in more frequent failures.  Understanding the
+next-generation systems~\cite{Bergman08exascalecomputing} and technology
+changes like High-Bandwidth Memory~(HBM)~\cite{HBM}, it is not yet clear that
+chipkill-correct will continue to be viable.  Reduced device-feature sizes also
+have the potential to result in more frequent failures.  Understanding the
 implications of these trends requires that we have detailed knowledge of how
 failures affect current leadership-class systems.
 
 Error detection and handling is critical to pinpointing failing components and
-taking corrective action in a timely fashion. This error handling is typically a
-cooperative activity between the platform hardware, firmware (UEFI or BIOS), and
-the host operating system.  Error instances are signaled in host firmware or
-the OS directly. The firmware will read the hardware registers and analyze the
-component that generated the error in an effort to assess the severity of the
-error. Firmware will then create a detailed description of the error and notify
-the OS of its occurrence. Host firmware may additionally communicate this error
-to baseboard management controllers for system management purposes.  When the
-error notification is signaled to the OS, either directly or from host
+taking corrective action in a timely fashion. This error handling is typically
+a cooperative activity between the platform hardware, firmware (UEFI or BIOS),
+and the host operating system.  Error instances are signaled in host firmware
+or the OS directly. The firmware will read the hardware registers and analyze
+the component that generated the error in an effort to assess the severity of
+the error. Firmware will then create a detailed description of the error and
+notify the OS of its occurrence. Host firmware may additionally communicate
+this error to baseboard management controllers for system management purposes.
+When the error notification is signaled to the OS, either directly or from host
 firmware, the OS typically inspect hardware registers or firmware and initiate
 corrective action.  This handling by the OS and/or firmware can perturb
 application progress, even in cases where the failure does not initiate a
@@ -44,43 +48,59 @@ corrected or recovered in hardware such that platform state is left as if no
 error had occurred.  An example of a CE is is a single bit (or single symbol in
 the case of chipkill) error.  Detected, uncorrectable errors (DUE) are those
 that could be detected by hardware, but could not be corrected.
-Multi-bit/Multi-symbol errors are an example of such an error.  In many cases it
-is possible for the system to continue functioning in the face of these errors,
-perhaps with a certain amount of lost state.  Finally, fatal errors are those
-errors such that continuing after this error would make the system unreliable.
-Fatal errors typically initiate a full system halt.
+Multi-bit/Multi-symbol errors are an example of such an error.  In many cases
+it is possible for the system to continue functioning in the face of these
+errors, perhaps with a certain amount of lost state.  Finally, fatal errors are
+those errors such that continuing after this error would make the system
+unreliable.  Fatal errors typically initiate a full system halt.
 
-Recent works typically focus on uncorrectable and fatal errors, those errors that cause
-applications to restart.  However, the impacts of the most common error of
-large-scale systems, correctable errors, is typically overlooked. An analysis of
-failures on recent leadership-class systems show that the correctable failure
-rate is a factor \hl{ADD} more frequent than uncorrectable errors.  Correctable
-errors are typically handled at a hardware level, and not reflected to the
-application.  While the application continues to make progress in the presence
-of these correctable errors and does not need to restart,the mechanism to
-correct and log these errors have the potential to impact application
-performance by delaying application computation. In this work we seek to address
-the question of the performance impacts of correctable errors
+Recent works typically focus on uncorrectable and fatal errors, those errors
+that cause applications to restart.  However, the impacts of the most common
+error of large-scale systems, correctable errors, is typically overlooked. An
+analysis of failures on recent leadership-class systems show that the
+correctable failure rate is a factor \hl{ADD} more frequent than uncorrectable
+errors.  Correctable errors are typically handled at a hardware level, and not
+reflected to the application.  While the application continues to make progress
+in the presence of these correctable errors and does not need to restart, the
+mechanism to correct and log these errors have the potential to impact
+application performance by delaying application computation. These CEs can be
+transient, generating only one or a small handful of error events on a node, or
+can be persistent and generate in some cases millions of error events.  These
+\emph{bursty} CE events can lead to significant application slowdowns even on
+current systems~\cite{BURSTY}.  In this work we seek to address the question of
+the performance impacts of correctable errors
 
 \input{propagation-fig}
 
 In an effort to better understand the impacts from correctable errors, in this
 paper we present in-depth analyses that reveal how the interplay between
 application and hardware/firmware/OS correctable activities impact performance.
-We anticipate that this interplay will become increasingly more important as
-node counts and memory volumes increase dramatically on future extreme-scale
-systems, further increasing error rates. \kbf{beef up justification for
-following sentence to justify increased rates} Additionally, smaller feature
-sizes, manufacturing variances, changing memory protection technology, hardware
-aging effects, and sub-threshold logic have the potential to further exacerbate
-this problem and increase the correctable and uncorrectable error rates.  More
-specifically, using a wide array of applications, we demonstrate that the
-overheads associated with  correctable errors can have a significant impact on
-overall application performance.  These local correctable errors introduce
-overheads that can amplified or absorbed globally by an application depending
-on an application's communication activities.  We use profiles of these
-communication activities as well as microbenchmark studies to more precisely
-attribute each application's performance to its communication operations.
+We therefore attempt to answer a number of key important questions:
+
+\begin{itemize}
+        \item At what CE frequency does one "Bursty" node have significant
+              performance impact on current and future systems?
+        \item Given current correctable error rates, what is the performance
+              overheads of CE on current and expected future extreme-scale systems?
+        \item How much can CE rates increase without significantly impacting
+              performance?
+        \item Given these performance overheads, what advice can we give system
+              designers to keep slowdowns due to CEs low?
+\end{itemize}
+
+We anticipate that this performance interplay for correctable overheads will
+become increasingly more important as node counts and memory volumes increase
+dramatically on future extreme-scale systems, further increasing error rates.
+\kbf{beef up justification for following sentence to justify increased rates}
+Additionally, smaller feature sizes, manufacturing variances, changing memory
+protection technology, hardware aging effects, and sub-threshold logic have the
+potential to further exacerbate this problem and increase the correctable and
+uncorrectable error rates.  More specifically, using a wide array of
+applications, we demonstrate that the overheads associated with  correctable
+errors can have a significant impact on overall application performance.  These
+local correctable errors introduce overheads that can amplified or absorbed
+globally by an application depending on an application's communication
+activities. 
 
 The possibly of correctable error activities inducing delays amongst application
 processes, including those that do not directly communicate, is analogous to the
