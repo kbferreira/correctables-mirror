@@ -312,6 +312,29 @@ applications are here.  Prolly remove GTC and add SPARC}
    }
 \end{figure*}
 
+\subsection{Correctable Overheads for Systems in \Cref{tab:CE_rate}}
+
+
+\begin{figure*}
+\centering{
+        \subfloat[][Cielo]{
+        \includegraphics[width=0.3\textwidth]{Cielo_333MTBF_8192nodes.png}
+        \label{fig:system:Cielo}
+    }
+}
+\caption{\textbf{
+        Performance impacts of correctable errors using data from 
+        \Cref{tab:CE_rate}.  Three scenarios are shown:
+        hardware only correction with no logging ($150ns$ per event),
+        Software-based logging using the Corrected Machine Check
+        Architecture (CMCA) ($775\mu sec$ per event), and the
+        Firmware-based logging using the Enhanced Machine Check
+        Architecture (EMCA) ($133msecs$ per event) }.
+}
+\label{fig:systems}
+\end{figure*}
+
+
 \subsection{Exploring Correctable Frequency and Duration}
 
 \kbf{Add plots here ... }
