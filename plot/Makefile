@@ -4,6 +4,11 @@ FIGS_DIR =../figs
 
 DIRS = $(sort $(dir $(wildcard ../data/*/*/)))
 
+DATAConfigs = $(wildcard ../data/configs/*.delta)
+FIGSConfigs = $(addprefix ${FIGS_DIR}/, $(notdir $(DATAConfigs:.delta=.png)))
+PATTERNConfigs = $(subst MTBF,%,${FIGSConfigs})
+SCRIPTConfigs = ./correctable_bar.py
+
 DATA5HZ = $(wildcard ../data/bursty-5Hz/*.scale)
 FIGS5HZ = $(addprefix ${FIGS_DIR}/, $(notdir $(DATA5HZ:.scale=-apps-scale.pdf)))
 PATTERN5HZ = $(subst 5Hz,%,${FIGS5HZ})
@@ -36,9 +41,12 @@ FIGSdelta = $(addprefix ${FIGS_DIR}/,$(DATAdelta:../data/correctables/delta/%.de
 PATTERNdelta = $(subst delta,%,${FIGSdelta})
 SCRIPTdelta  = ./delta.py
 
+all: ${FIGSdetour} ${FIGSscaling} ${FIGSdelta} ${FIGS5HZ} ${FIGSFreq} ${FIGSDelta5HZ} ${FIGSConfigs}
+
 print-%  : ; @echo $* = $($*)
 
-all: ${FIGSdetour} ${FIGSscaling} ${FIGSdelta} ${FIGS5HZ} ${FIGSFreq} ${FIGSDelta5HZ}
+${PATTERNConfigs}: ${DATAConfigs} ${SCRIPTConfigs}
+	${SCRIPTConfigs}
 
 ${PATTERN5HZ}: ${DATA5HZ} ${SCRIPT5HZ}
 	${SCRIPT5HZ}
@@ -61,5 +69,5 @@ ${PATTERNdetour}: ${DATAdetour} ${SCRIPTdetour}
 print-%  : ; @echo $* = $($*)
 
 clean:
-	-rm -f ${FIGSdetour} ${FIGSscaling} ${FIGSdelta} ${FIGS5HZ} ${FIGSFreq} ${FIGSDelta5HZ}
+	-rm -f ${FIGSdetour} ${FIGSscaling} ${FIGSdelta} ${FIGS5HZ} ${FIGSFreq} ${FIGSDelta5HZ} ${FIGSConfigs}
 	-rm -f ${FIGS_DIR}/*.pdf
