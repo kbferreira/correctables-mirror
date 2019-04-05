@@ -136,7 +136,7 @@ if __name__ == '__main__':
         mtbf = 333
         nodes = [ 8192, 8000 ]
         with open( outpath + "/" + "Cielo_" + str( mtbf ) +
-                        "MTBF" + str( nodes[ 0 ] ) + ".delta", "w" ) as out:
+                        "MTBF_" + str( nodes[ 0 ] ) + "nodes.delta", "w" ) as out:
                 out.write( "App\t " + "\t ".join( delta ) + "\n" )
                 for a in apps:
                         out.write( a + "\t " )
