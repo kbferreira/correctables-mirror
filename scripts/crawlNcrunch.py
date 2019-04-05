@@ -132,18 +132,24 @@ if __name__ == '__main__':
         apps = sorted( seen_apps )
         delta = sorted( seen_deltas, key=float )
         mtbfs = sorted( seen_mtbfs )
-        for freq in freqs:
-                for nodes in [ "65536", "32768", "16384", "16000" ]:
-                        with open( outpath + "/" + freq + "_" + nodes + ".delta",
-                                        "w" ) as out:
-                                out.write( "Delta\t " + "\t ".join( apps ) + "\n" )
-                                for d in delta:
-                                        out.write( d + "\t " )
-                                        for a in apps:
-                                                try:
-                                                        value = data_max[ "%s-%s-%s-%s" % ( freq, d, a, nodes ) ] 
-                                                except KeyError, e:
-                                                        value = '-'
-                                                out.write( str( value ) + "\t " )
-                                        out.write( "\n" )
+
+        mtbf = 333
+        nodes = [ 8192, 8000 ]
+        with open( outpath + "/" + "Cielo_" + str( mtbf ) +
+                        "MTBF" + str( nodes[ 0 ] ) + ".delta", "w" ) as out:
+                out.write( "App\t " + "\t ".join( delta ) + "\n" )
+                for a in apps:
+                        out.write( a + "\t " )
+                        for d in delta:
+                                try:
+                                    value = data_max[ "%s-%s-%s-%s" % ( mtbf, d, a, nodes[ 0 ] ) ] 
+                                except KeyError, e:
+                                        try:
+                                           value = data_max[ "%s-%s-%s-%s" % ( mtbf, d, a, nodes[ 1 ] ) ]
+                                        except KeyError, e:
+                                           value = '-'
+
+
+                                out.write( str( value ) + "\t " )
+                        out.write( "\n" )
 
