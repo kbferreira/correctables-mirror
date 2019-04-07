@@ -14,7 +14,7 @@ TEXSRC       = $(filter-out $(SOURCES), $(shell ls *.tex))
 BIBSRC       = $(shell ls *.bib)
 BBL          = $(notdir $(BIBSRC:.bib=.bbl))
 
-FIGS         = $(shell ls figs/*.eps figs/*.pdf)
+FIGS         = $(shell ls figs/*.eps figs/*.pdf figs/*.png)
 
 DEPS         = $(DEP) $(TEXSRC) $(BIBSRC) $(FIGS) artifact/artifacts.tex all.bib
 

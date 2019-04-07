@@ -16,6 +16,9 @@ dst = "../figs"
 configs = {}
 # EXAMPLE : workloads[ <name> ] = ( <mtbf>, <nodes> )
 configs[ "Cielo" ] = ( 333, 8192 )
+configs[ "Trinity" ] = ( 86.5, 16384 )
+configs[ "Summit" ] = ( 17.3, 4096 )
+configs[ "Exascale" ] = ( 15.4, 16384 )
 
 for ( sys_name, ( mtbf, process_count ) ) in sorted( configs.items() ):
         data = np.genfromtxt( root_data_dir + "/" + sys_name + "_" + str( mtbf ) +
@@ -53,7 +56,8 @@ for ( sys_name, ( mtbf, process_count ) ) in sorted( configs.items() ):
         r = [ r1, r2, r3, r4, r5, r6, r7, r8, r9 ]
 
         fig, ax = plt.subplots()
-        plt.yscale( 'log', basey = 10 )
+#        plt.yscale( 'log', basey = 10 )
+        plt.ylim( top = 10, bottom = -0.1 )
 
         for i, l in enumerate( labels ):
                 plt.bar( r[ i ], bar_slow[ l ], label = l, 

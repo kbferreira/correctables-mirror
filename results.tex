@@ -318,20 +318,32 @@ applications are here.  Prolly remove GTC and add SPARC}
 \begin{figure*}
 \centering{
         \subfloat[][Cielo]{
-        \includegraphics[width=0.3\textwidth]{Cielo_333MTBF_8192nodes.png}
-        \label{fig:system:Cielo}
-    }
+                \includegraphics[width=0.3\textwidth]
+                        {Cielo_333MTBF_8192nodes.png}
+                \label{fig:current_system:Cielo}
+        }
+        \subfloat[][Trinity]{
+                \includegraphics[width=0.3\textwidth]
+                        {Trinity_86.5MTBF_16384nodes.png}
+                \label{fig:current_system:Trinity}
+        }
+        \subfloat[][Summit]{
+                \includegraphics[width=0.3\textwidth]
+                        {Summit_17.3MTBF_4096nodes.png}
+                \label{fig:current_system:Summit}
+        }
 }
 \caption{\textbf{
-        Performance impacts of correctable errors using data from 
-        \Cref{tab:CE_rate}.  Three scenarios are shown:
+        Performance impacts of correctable errors for existing systems
+        Cielo, Trinity, and Summit using data from \Cref{tab:CE_rate}.
+        Three scenarios are shown:
         hardware only correction with no logging ($150ns$ per event),
         Software-based logging using the Corrected Machine Check
         Architecture (CMCA) ($775\mu sec$ per event), and the
         Firmware-based logging using the Enhanced Machine Check
         Architecture (EMCA) ($133msecs$ per event) }.
 }
-\label{fig:systems}
+\label{fig:current_systems}
 \end{figure*}
 
 
