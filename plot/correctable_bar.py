@@ -61,11 +61,11 @@ for ( sys_name, ( mtbf, process_count ) ) in sorted( configs.items() ):
 
         for i, l in enumerate( labels ):
                 plt.bar( r[ i ], bar_slow[ l ], label = l, 
-                         edgecolor = 'white' )
+                         edgecolor = 'white', bottom = -0.1 )
 
         plt.xlabel( 'Logging Mechanism', fontweight = 'bold' ) 
         plt.ylabel( 'Percent Slowdown', fontweight = 'bold' ) 
-        plt.xticks( [ t + ( bar_width * len( labels ) / 2 ) for t in r1 ],
+        plt.xticks( [ t + ( bar_width * len( labels ) / 2 ) - ( bar_width / 2 ) for t in r1 ],
                     delta_labels )
         plt.legend( loc = 'best' )
         plt.savefig( dst + '/' + sys_name + '_' + str( mtbf ) + 'MTBF_' +
