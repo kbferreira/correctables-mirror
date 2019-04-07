@@ -12,7 +12,7 @@ data_max = {}
 data_mean = {}
 data_min = {}
 
-seen_freqs = set()
+seen_mtbfs = set()
 seen_apps = set()
 seen_deltas = set()
 
@@ -64,7 +64,7 @@ if __name__ == '__main__':
                 else:
                         files = [ element ]
 
-                refile = r"([a-zA-Z-_0-9]+)-([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)Hz-([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)delta.(\d+).out"
+                refile =r"([a-zA-Z-_0-9]+)-([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)MTBF-([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)delta.(\d+).out"
                 
                 refline = r"^\(\d+ processes\) Procs and min mean max time: (\d+)\s+([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?) ([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?) ([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)"
                 for f in files:
@@ -75,12 +75,12 @@ if __name__ == '__main__':
                                 match = re.search( refile, file )
                                 APP = match.group( 1 )
                                 seen_apps.add( APP )
-                                FREQ = match.group( 2 )
-                                seen_freqs.add(FREQ)
+                                MTBF = match.group( 2 )
+                                seen_mtbfs.add( MTBF )
                                 DELTA = match.group( 6 )
-                                seen_deltas.add(DELTA)
-                                log.debug( "Match found: APP(%s) FREQ(%g) DELTA(%g)\n" % 
-                                        ( APP, float( FREQ ), float( DELTA ) ) )
+                                seen_deltas.add( DELTA )
+                                log.debug( "Match found: APP(%s) MTBF(%g) DELTA(%g)\n" % 
+                                        ( APP, float( MTBF ), float( DELTA ) ) )
                                 
                                 log.debug( "Opening %s for searching\n" % f )
 
@@ -105,25 +105,25 @@ if __name__ == '__main__':
                                                                                 )
                                                                         ) )
                                                         try:
-                                                                prev = data_max[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ]
+                                                                prev = data_max[ "%s-%s-%s-%s" % ( MTBF, DELTA, APP, PROC ) ]
                                                         except KeyError, e:
                                                                 prev = None
                                                         if( ( prev == None ) or ( prev < MAX ) ):
-                                                                data_max[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ] = MAX
+                                                                data_max[ "%s-%s-%s-%s" % ( MTBF, DELTA, APP, PROC ) ] = MAX
 
                                                         try:
-                                                                prev = data_mean[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ]
+                                                                prev = data_mean[ "%s-%s-%s-%s" % ( MTBF, DELTA, APP, PROC ) ]
                                                         except KeyError, e:
                                                                 prev = None
                                                         if( ( prev == None ) or ( prev < MEAN ) ):
-                                                                data_mean[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ] = MEAN
+                                                                data_mean[ "%s-%s-%s-%s" % ( MTBF, DELTA, APP, PROC ) ] = MEAN
 
                                                         try:
-                                                                prev = data_min[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ]
+                                                                prev = data_min[ "%s-%s-%s-%s" % ( MTBF, DELTA, APP, PROC ) ]
                                                         except KeyError, e:
                                                                 prev = None
                                                         if( ( prev == None ) or ( prev > MIN ) ):
-                                                                data_min[ "%s-%s-%s-%s" % ( FREQ, DELTA, APP, PROC ) ] = MIN
+                                                                data_min[ "%s-%s-%s-%s" % ( MTBF, DELTA, APP, PROC ) ] = MIN
 
         printf( "Found %d data entries\n", len( data_max ) )
 
@@ -131,19 +131,25 @@ if __name__ == '__main__':
 
         apps = sorted( seen_apps )
         delta = sorted( seen_deltas, key=float )
-        freqs = sorted( seen_freqs )
-        for freq in freqs:
-                for nodes in [ "65536", "32768", "16384", "16000" ]:
-                        with open( outpath + "/" + freq + "_" + nodes + ".delta",
-                                        "w" ) as out:
-                                out.write( "Delta\t " + "\t ".join( apps ) + "\n" )
-                                for d in delta:
-                                        out.write( d + "\t " )
-                                        for a in apps:
-                                                try:
-                                                        value = data_max[ "%s-%s-%s-%s" % ( freq, d, a, nodes ) ] 
-                                                except KeyError, e:
-                                                        value = '-'
-                                                out.write( str( value ) + "\t " )
-                                        out.write( "\n" )
+        mtbfs = sorted( seen_mtbfs )
+
+        mtbf = 333
+        nodes = [ 8192, 8000 ]
+        with open( outpath + "/" + "Cielo_" + str( mtbf ) +
+                        "MTBF_" + str( nodes[ 0 ] ) + "nodes.delta", "w" ) as out:
+                out.write( "App\t " + "\t ".join( delta ) + "\n" )
+                for a in apps:
+                        out.write( a + "\t " )
+                        for d in delta:
+                                try:
+                                    value = data_max[ "%s-%s-%s-%s" % ( mtbf, d, a, nodes[ 0 ] ) ] 
+                                except KeyError, e:
+                                        try:
+                                           value = data_max[ "%s-%s-%s-%s" % ( mtbf, d, a, nodes[ 1 ] ) ]
+                                        except KeyError, e:
+                                           value = '-'
+
+
+                                out.write( str( value ) + "\t " )
+                        out.write( "\n" )
 
