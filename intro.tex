@@ -58,14 +58,16 @@ Recent works typically focus on uncorrectable and fatal errors, those errors
 that cause applications to restart.  However, the impacts of the most common
 error of large-scale systems, correctable errors, is typically overlooked. An
 analysis of failures on recent leadership-class systems show that the
-correctable failure rate is a factor \hl{ADD} more frequent than uncorrectable
-errors.  Correctable errors are typically handled at a hardware level, and not
-reflected to the application.  While the application continues to make progress
-in the presence of these correctable errors and does not need to restart, the
-mechanism to correct and log these errors have the potential to impact
-application performance by delaying application computation. These CEs can be
-transient, generating only one or a small handful of error events on a node, or
-can be persistent and generate in some cases millions of error events.  These
+correctable failure rates vary from a factor of
+8~\cite{siddiqua:2017:lifetime,levy:2018:lessons} to a factor of
+20~\cite{meza:2015:revisiting} times more frequent than uncorrectable errors.
+Correctable errors are typically handled at a hardware level, and not reflected
+to the application.  While the application continues to make progress in the
+presence of these correctable errors and does not need to restart, the mechanism
+to correct and log these errors have the potential to impact application
+performance by delaying application computation. These CEs can be transient,
+generating only one or a small handful of error events on a node, or can be
+persistent and generate in some cases millions of error events.  These
 \emph{bursty} CE events can lead to significant application slowdowns even on
 current systems~\cite{BURSTY}.  In this work we seek to address the question of
 the performance impacts of correctable errors
