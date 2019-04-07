@@ -346,6 +346,42 @@ applications are here.  Prolly remove GTC and add SPARC}
 \label{fig:current_systems}
 \end{figure*}
 
+\begin{figure*}
+\centering{
+        \subfloat[][$Exascale_{CE_{Cielo}}$]{
+                \includegraphics[width=0.3\textwidth]
+                        {Exascale_Cielo_15.4MTBF_16384nodes.png}
+                \label{fig:Exascale:Cielo}
+        }
+        \subfloat[][$Exascale_{CE_{Cielo \times 10}}$]{
+                \includegraphics[width=0.3\textwidth]
+                        {Exascale_Cielo10_1.54MTBF_16384nodes.png}
+                \label{fig:Exascale:Cielo10}
+        }
+        \subfloat[][$Exascale_{CE_{median( Facebook )}}$]{
+                \includegraphics[width=0.3\textwidth]
+                        {Exascale_Facebook_0.12MTBF_16384nodes.png}
+                \label{fig:Exascale:Facebook}
+        }
+}
+\caption{\textbf{
+        Performance impacts of correctable errors for hypothetical
+        Exascale-class systems using the data from \Cref{tab:CE_rate}.
+        Three error rates are shown: the rate measure on
+        Cielo~\cite{levy:2018:lessons}, Ten times the rate measured on
+        Cielo (denoted $CE_{Cielo \times 10}$), and the rate measured
+        as the median from Meza et al.~\cite{meza:2015:revisiting}( about 100
+        times the CE rate measured on Cielo, denoted 
+        $CE_{median( Facebook )}$). Three scenarios are shown:
+        hardware only correction with no logging ($150ns$ per event),
+        Software-based logging using the Corrected Machine Check
+        Architecture (CMCA) ($775\mu sec$ per event), and the
+        Firmware-based logging using the Enhanced Machine Check
+        Architecture (EMCA) ($133msecs$ per event) }.
+}
+\label{fig:current_systems}
+\end{figure*}
+
 
 \subsection{Exploring Correctable Frequency and Duration}
 

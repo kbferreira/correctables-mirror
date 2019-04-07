@@ -18,7 +18,9 @@ configs = {}
 configs[ "Cielo" ] = ( 333, 8192 )
 configs[ "Trinity" ] = ( 86.5, 16384 )
 configs[ "Summit" ] = ( 17.3, 4096 )
-configs[ "Exascale" ] = ( 15.4, 16384 )
+configs[ "Exascale_Cielo" ] = ( 15.4, 16384 )
+configs[ "Exascale_Cielo10" ] = ( 1.54, 16384 )
+configs[ "Exascale_Facebook" ] = ( 0.12, 16384 )
 
 for ( sys_name, ( mtbf, process_count ) ) in sorted( configs.items() ):
         data = np.genfromtxt( root_data_dir + "/" + sys_name + "_" + str( mtbf ) +
@@ -57,7 +59,13 @@ for ( sys_name, ( mtbf, process_count ) ) in sorted( configs.items() ):
 
         fig, ax = plt.subplots()
 #        plt.yscale( 'log', basey = 10 )
-        plt.ylim( top = 10, bottom = -0.1 )
+
+        if "Exascale" not in sys_name:  
+                plt.ylim( top = 10, bottom = -0.1 )
+        else:
+                plt.yscale( 'log', basey = 10 )
+                plt.ylim( top = 2000, bottom = 0.01 )
+
 
         for i, l in enumerate( labels ):
                 plt.bar( r[ i ], bar_slow[ l ], label = l, 
