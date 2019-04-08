@@ -29,7 +29,8 @@ for ( sys_name, ( mtbf, process_count ) ) in sorted( configs.items() ):
                         deletechars= '~!@#$%^&*()=+~\|]}[{;: /?>,<' )
         
         deltas = [ 0.15, 775, 133000 ]
-        delta_labels = [ "Logging-off", "Software", "Firmware" ]
+        delta_labels = [ "Hardware (No Logging)", "Software Logging",
+                         "Firmware Logging" ]
         labels = data[ "App" ]
         
         slowdowns = {}
