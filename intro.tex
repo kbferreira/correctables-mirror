@@ -6,6 +6,7 @@
 most logical}
 
 \kbf{Following paragraph is nearly identical to parallel submission}
+\sll{First paragraph is very close to SC18 paper.}
 
 Maintaining the performance of high-performance computing~(HPC) applications as
 failures become more and more frequent is a major challenge that needs to be
@@ -27,58 +28,74 @@ have the potential to result in more frequent failures.  Understanding the
 implications of these trends requires that we have detailed knowledge of how
 failures affect current leadership-class systems.
 
+\sll{This is pretty detailed to include in the introduction.  Maybe a background
+section?}
 Error detection and handling is critical to pinpointing failing components and
-taking corrective action in a timely fashion. This error handling is typically
+taking corrective action in a timely fashion.  Error handling is typically
 a cooperative activity between the platform hardware, firmware (UEFI or BIOS),
-and the host operating system.  Error instances are signaled in host firmware
-or the OS directly. The firmware will read the hardware registers and analyze
-the component that generated the error in an effort to assess the severity of
-the error. Firmware will then create a detailed description of the error and
-notify the OS of its occurrence. Host firmware may additionally communicate
-this error to baseboard management controllers for system management purposes.
+and the host operating system.  Errors are signaled in host firmware
+or the OS directly. The firmware reads the hardware registers (\sll{of the CPU??}) 
+and analyzes the component that generated the error in an effort to assess the severity of
+the error.  Firmware then creates a detailed description of the error and
+notifies the OS of its occurrence. Additionally, the host firmware (\sll{is ``firmware''
+different than ``host firmware''}) may communicate
+this error to the baseboard management controller~(BMC) for system management purposes.
 When the error notification is signaled to the OS, either directly or from host
 firmware, the OS typically inspect hardware registers or firmware and initiate
-corrective action.  This handling by the OS and/or firmware can perturb
+corrective action.  Time spent handling an error by the OS and/or firmware can perturb
 application progress, even in cases where the failure does not initiate a
 restart.
 
+\sll{I \emph{think} that we're really only talking about memory errors?  Can we say that?}
 Errors are typically classified into three categories: Correctable,
 Uncorrectable, and Fatal. Correctable errors (CE) are errors that can be
-corrected or recovered in hardware such that platform state is left as if no
-error had occurred.  An example of a CE is is a single bit (or single symbol in
-the case of chipkill) error.  Detected, uncorrectable errors (DUE) are those
-that could be detected by hardware, but could not be corrected.
+corrected or mitigated in hardware such that the platform's state is the same as it
+would have been left if no error had occurred.  An example of a CE is is a single bit 
+(or single symbol in the case of chipkill) error.  Detected, uncorrectable errors (DUE) are those
+errors that could be detected by hardware, but could not be corrected.
 Multi-bit/Multi-symbol errors are an example of such an error.  In many cases
 it is possible for the system to continue functioning in the face of these
-errors, perhaps with a certain amount of lost state.  Finally, fatal errors are
-those errors such that continuing after this error would make the system
-unreliable.  Fatal errors typically initiate a full system halt.
+errors, perhaps with a certain amount of lost state.  \sll{Not sure what the ``In many
+cases'' caveat means.  If it can't continue functioning then isn't it a \emph{fatal}
+error?}  Finally, fatal errors corrupt the state of the platform such that continued 
+correct operation can no longer be guaranteed.  Recovering from a fatal error typically 
+requires a full system halt and a reboot.
 
-Recent works typically focus on uncorrectable and fatal errors, those errors
-that cause applications to restart.  However, the impacts of the most common
-error of large-scale systems, correctable errors, is typically overlooked. An
-analysis of failures on recent leadership-class systems show that the
+Recent research has largely focused on uncorrectable and fatal errors: errors
+that require applications to be restarted.  However, the impacts of the most common
+type of errors in large-scale systems, correctable errors, have largely been overlooked. An
+analysis of failures on recent leadership-class systems shows that the
 correctable failure rates vary from a factor of
 8~\cite{siddiqua:2017:lifetime,levy:2018:lessons} to a factor of
 20~\cite{meza:2015:revisiting} times more frequent than uncorrectable errors.
-Correctable errors are typically handled at a hardware level, and not reflected
-to the application.  While the application continues to make progress in the
-presence of these correctable errors and does not need to restart, the mechanism
-to correct and log these errors have the potential to impact application
+\sll{Can we say this?  Isn't this getting at the data that AMD required us to remove?}
+Correctable errors are typically handled at a hardware level and are largely invisible 
+to the application.  While the application can continue to make progress despite the
+presence of correctable errors (i.e. restarting the application is unnecessary), the 
+time required to correct and log these errors has the potential to impact application
 performance by delaying application computation. These CEs can be transient,
 generating only one or a small handful of error events on a node, or can be
-persistent and generate in some cases millions of error events.  These
+persistent and generate in some cases millions of error events.  \sll{Struggling with
+the significance of the difference between transient and persistent CEs.}  These
 \emph{bursty} CE events can lead to significant application slowdowns even on
-current systems~\cite{BURSTY}.  In this work we seek to address the question of
-the performance impacts of correctable errors
+current systems~\cite{BURSTY}.  \sll{\emph{bursty} still feels out of place to me.  Fundamentally,
+we only care about rates, not about whether there are ``bursts'' of errors.  It's also not
+clear to me from this paragraph what we mean by ``bursty''.}
 
 \input{propagation-fig}
 
-In an effort to better understand the impacts from correctable errors, in this
-paper we present in-depth analyses that reveal how the interplay between
-application and hardware/firmware/OS correctable activities impact performance.
-We therefore attempt to answer a number of key important questions:
+In this paper, we present a detailed analysis of the relationship between the cost of
+correcting and logging memory CEs and application performance on large-scale systems.
+Specifically, to better understand the potential performance impact of CEs, we answer the 
+following key questions:
 
+\begin{itemize}
+  \item What is the expected performance impact of CEs on applications running on current and 
+        projected future extreme-scale systems?
+  \item How frequently can CEs occur without significantly degrading application performance?
+  \item What is the application performance impact of CEs that are isolated to a single process?
+  \item How can system designers address CEs to improve application performance on next-generation systems?
+\end{itemize}
 \begin{itemize}
         \item At what CE frequency does one "Bursty" node have significant
               performance impact on current and future systems?
@@ -90,19 +107,20 @@ We therefore attempt to answer a number of key important questions:
               designers to keep slowdowns due to CEs low?
 \end{itemize}
 
-We anticipate that this performance interplay for correctable overheads will
-become increasingly more important as node counts and memory volumes increase
+We anticipate that the relationship between application performance and CE 
+overheads will become increasingly more important as node counts and memory volumes increase
 dramatically on future extreme-scale systems, further increasing error rates.
 \kbf{beef up justification for following sentence to justify increased rates}
 Additionally, smaller feature sizes, manufacturing variances, changing memory
 protection technology, hardware aging effects, and sub-threshold logic have the
-potential to further exacerbate this problem and increase the correctable and
-uncorrectable error rates.  More specifically, using a wide array of
+potential to further exacerbate this problem by increasing the rate of CEs.
+More specifically, using a wide array of
 applications, we demonstrate that the overheads associated with  correctable
 errors can have a significant impact on overall application performance.  These
 local correctable errors introduce overheads that can amplified or absorbed
 globally by an application depending on an application's communication
-activities. 
+activities. \sll{These last two sentences seem to be repeating content from 
+earlier in the section.}
 
 The possibly of correctable error activities inducing delays amongst application
 processes, including those that do not directly communicate, is analogous to the
@@ -125,6 +143,8 @@ activities can propagate based on communication dependencies in the application.
 
 Based on the studies presented in this paper, we make the following
 contributions \kbf{Contributions need revisiting}:
+\sll{Do we need contributions?  It seems like we should include either the
+questions above or the contributions below.}
 
 \begin{itemize}
 
