@@ -3,25 +3,35 @@
 \label{sec:approach}
 
 \subsection{APEI Error Injection}
+To develop a detailed understanding of the cost of recovering from correctable 
+errors, we collected empirical data using ACPI Platform Error Interfaces~(APEI) Error 
+Injection, \emph{see} \refsec{sec:results:dram_correctable}.  APEI is part of the 
+Advanced Configuration and Power Interface (ACPI).  ACPI is a standard that defines how 
+operating systems interact with the hardware components that comprise the systems on 
+which they run.  APEI defines an interface by which the operating system can be notified 
+of errors.  The APEI also provides a mechanism for injecting hardware errors: the error 
+injection table~(EINJ).
 
-As stated previously, this work is focused on the impacts of correctable errors.
-These impacts occur at a number of different levels in the system.  To measure
-these impacts we need a method of injecting these errors in a system to measure
-the costs.  A number of methods exist to inject these types of errors on a
-running system: from hardware-specific DRAM daughter cards that synthetically
-flip memory cells within the DIMM device to methods that stress the memory
-system in an effort to induce failures. 
+%we use the error injection table (EINJ) support provided as part
+%these impacts we need a method of injecting these errors in a system to measure
+%the costs.  A number of methods exist to inject these types of errors on a
+%running system: from hardware-specific DRAM daughter cards that synthetically
+%flip memory cells within the DIMM device to methods that stress the memory
+%system in an effort to induce failures. 
 
-In this work, we use the error injection table (EINJ) support provided as part
-of the Advanced Configuration and Power Interface (ACPI)
-specification~\cite{ACPISpec}.  EINJ provides a platform-independent interface
-through which the platform OS can inject hardware errors to the platform without
-requiring platform specific level software support. The primary goal of this
-mechanism is to support testing of the OS error handling stack. Through this
-capability the OS is able to implement a simple interface for diagnostic and
-validation of RAS handling on the system.  EINJ is not supported on 
-every production platform, it requires support from the host processor, OS, and
-firmware/BIOS.
+%In this work, we use the error injection table (EINJ) support provided as part
+%of the Advanced Configuration and Power Interface (ACPI)
+%specification~\cite{ACPISpec}.  
+
+EINJ provides a platform-independent interface that enables the operating system to
+inject hardware errors to the platform without requiring platform-specific software 
+support. The primary objective of this mechanism is to validate an operating system's 
+Reliability, Availability, and Serviceability~(RAS) features.  The ACPI specification 
+defines several error types for EINJ.  The supported errors are summarized in \Cref{tab:einj}.  
+EINJ is not supported on every platform; it requires support from the host processor, 
+OS, and firmware/BIOS.  Moreover, platforms that support EINJ may not support all 
+possible error types.  For example, our test platform supports only the \emph{Memory Correctable} 
+and \emph{Memory Uncorrectable} error types.
 
 \begin{table}
 \centering
@@ -45,18 +55,20 @@ Error Type Value & Error Description \\
 \end{tabular}
 \vspace{.6em}
 \caption{
-        Available error types defined in ACPI specification.  Highlighted value
-        used in this current work 
+        Available error types defined in ACPI specification.  The highlighted value
+        (\emph{Memory Correctable}) was to collect the data presented in this paper.
 }
 \label{tab:einj}
 \end{table}
 
-The specification defines a number of different error types.  These types are
-defined in \Cref{tab:einj}.  On our test linux platform, only the memory
-correctable and memory uncorrectable error types are supported.  Injecting
-errors through the EINJ table on linux is done through the sysfs filesystem
-interface.  This injection interface allows a user to specifically the error type
-and memory address for the error.
+%On our test platform, only \emph{Memory
+%Correctable and memory uncorrectable error types are supported.  
+\sll{KBF: please make sure that I've got this right.}\\
+Using the EINJ table to inject errors on Linux-based systems is accomplished by writing to virtual 
+files in the sysfs.\footnote{All of the relevant virtual files are in the \texttt{/sys/kernel/debug/apei/einj}
+directory.  Additional information about Linux EINJ support, including a simple example, is available
+in the Linux kernel documentation, \emph{see} \cite{einj_web}.} Using this interface, the user can 
+specify the error type and target memory address, and trigger the injection of the error.
 
 \subsection{Memory Failure Logging}
 
