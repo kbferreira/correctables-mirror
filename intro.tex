@@ -109,38 +109,39 @@ following key questions:
 \end{itemize}
 
 We anticipate that the relationship between application performance and CE 
-overheads will become increasingly more important as node counts and memory volumes increase
-dramatically on future extreme-scale systems, further increasing error rates.
+overheads will become increasingly more important as error rates increase on
+next-generation extreme-scale systems.  Dramatic growth in system size (both
+in terms of node count and node density) and total memory volume are likely
+to lead to more frequent CEs on future systems. 
 \kbf{beef up justification for following sentence to justify increased rates}
-Additionally, smaller feature sizes, manufacturing variances, changing memory
+Additionally, smaller feature sizes, manufacturing variability, changing memory
 protection technology, hardware aging effects, and sub-threshold logic have the
-potential to further exacerbate this problem by increasing the rate of CEs.
+potential to further increase the rate of CEs.  
 More specifically, using a wide array of
 applications, we demonstrate that the overheads associated with  correctable
 errors can have a significant impact on overall application performance.  These
 local correctable errors introduce overheads that can amplified or absorbed
 globally by an application depending on an application's communication
 activities. \sll{These last two sentences seem to be repeating content from 
-earlier in the section.}
+elsewhere in the section.}
 
-The possibly of correctable error activities inducing delays amongst application
-processes, including those that do not directly communicate, is analogous to the
-manner in which operating system noise (or \emph{jitter}) can affect HPC
-applications~\cite{Hoefler:2010:Characterizing, Ferreira:08:characterizing}.
-\Cref{fig:propagation} illustrates this phenomenon.  \Cref{subfig:no_ckpt} shows
-a simple application running across three processes ($p_0$, $p_1$, and $p_2$)
-with no delays due to CE.  These three processes exchange two messages,
-$\mathbf{m}_1$ and $\mathbf{m}_2$.  We assume here that these messages represent
-strict dependencies: any delay in the arrival of a message requires the
+The introduction of delays in application processes by CE-related correction and 
+logging activities is analogous to how operating system noise (or \emph{jitter}) can 
+affect the performance of large-scale applications~\cite{Hoefler:2010:Characterizing, 
+Ferreira:08:characterizing}.  \Cref{fig:propagation} illustrates this phenomenon.  
+\Cref{subfig:no_ckpt} shows a simple application running across three processes 
+($p_0$, $p_1$, and $p_2$) in the absence of CEs.  These three processes exchange two 
+messages, $\mathbf{m}_1$ and $\mathbf{m}_2$.  For the purposes of this figure, we assume 
+that these messages represent strict dependencies: any delay in the arrival of a message requires the
 recipient to stall until the message is received. \Cref{subfig:uncoord_ckpt}
-illustrates the potential impacts due to local CE mitigation activity.  If $p_0$
-receives a CE at the instant before it would have otherwise sent $\mathbf{m}_1$,
+illustrates the potential impact of CE correction and logging.  If $p_0$
+encounters a CE at the instant before it would have otherwise sent $\mathbf{m}_1$,
 then $p_1$ is forced to wait (the waiting period is shown in grey) until the
-message arrives.  If $p_1$ subsequently receives a CE before sending
+message arrives.  If $p_1$ subsequently encounters a CE before sending
 $\mathbf{m}_2$, then $p_2$ is forced to wait.  Part of the time that $p_2$
 spends waiting is due to a delay that was originated by $p_0$, which it does not
-communicate with.  The key point is that delays due to correctable error
-activities can propagate based on communication dependencies in the application.
+communicate with.  The key point is that delays due to CEs can propagate based on 
+communication dependencies in the application.
 
 Based on the studies presented in this paper, we make the following
 contributions \kbf{Contributions need revisiting}:
