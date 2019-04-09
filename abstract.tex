@@ -2,30 +2,40 @@
 \begin{abstract}
 
 % Motivation
-        Fault-tolerance poses a major challenge for future large-scale systems.
-        Active research in the field typically focuses on mitigating the
-        effects of uncorrectable errors, those fatal errors that typically
-        require an application to restart from a known good state.
+        Fault tolerance poses a major challenge for future large-scale systems.
+        Current research on fault tolerance has been principally focused on mitigating the 
+        impact of uncorrectable errors: errors that corrupt the state of the machine and
+        prevent continued execution.  Recovery from an uncorrectable error typically 
+        requires the affected application to restart from a known good state.
 % Methods/Procedures
-        However, the impacts of the most common error of large-scale systems,
-        correctable errors, is typically overlooked.  Moreover, increased
-        memory volumes and expected technology changes on future extreme-scale
-        system may make these errors even more likely and more of a concern.
-        In this work, we use a simulation-based approach to show how local
-        correctable errors can significantly affect the performance of key
-        extreme-scale workloads.
+        However, correctable errors occur much more frequently than uncorrectable errors.
+        Projections about next-generation large-scale systems --- e.g., larger total memory
+        volume, technology changes --- suggest that correctable errors will be more even more 
+        common on future systems.  Although an application can safely continue to execute when 
+        correctable errors occur, recovery from a correctable error requires the error to be 
+        corrected and, in most cases, information about its occurrence to be logged.  The
+        potential performance impact of these recovery activities has not been extensively  
+        studied.  
 % Findings
+
+        In this paper, we use simulation to examine the relationship 
+        between recovery from correctable errors and application performance for several important
+        extreme-scale workloads.  Our paper contains what is, to the best of our knowledge, the first 
+        detailed analysis of the impact of recovering from correctable errors on application 
+        performance.  \sll{This \emph{feels} like it's overemphasizing noise.  I \emph{think} that 
+        most of the results don't show much propagation/aggregation of noise}
         Our study shows that local delays due to correctable errors can
         propagate through MPI message synchronization to other processes,
-        causing a cascading series of delays.  We also find that though much of
+        causing a cascading series of delays.  We also find that although 
         the focus on correctable errors is focused on reducing failure rates,
         reducing the rate of each individual error may be more impacting on
         overheads at scale. Finally,  this study outlines the errors
         frequencies, durations, and scales in which performance is
         significantly impacted for a number of key extreme-scale workloads.
 % Conclusion/Impacts
-        This work provides critical analysis and insight into the overheads of
-        common correctable errors and provides practical advice to users and
-        systems administrators in an effort to fine-tune performance to
+        \sll{Advice to users?  What advice is that?}
+        This paper provides critical analysis and insight into the overheads of
+        correctable errors and provides practical advice to users,
+        systems administrators, and hardware designers in an effort to fine-tune performance to
         application and system characteristics.  \end{abstract}
 
