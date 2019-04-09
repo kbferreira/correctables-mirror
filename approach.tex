@@ -96,7 +96,7 @@ and firmware-based.  In the case of software-based notification, a Corrected Mac
 the DRAM error and the time of its occurrence.  However, it may be difficult
 to determine the precise DRAM location of an error because of complexities related
 to memory organization~\cite{Gottscho:2017:Measuring}.  As a result, mitigating
-failures with memory page retirement~\cite{Tang:2006:Assessment} may not always
+errors with memory page retirement~\cite{Tang:2006:Assessment} may not always
 be possible with CMCI-based reporting.  With firmware-based notification, the
 information recorded when the error occurs includes the physical address and the
 specific DRAM device where the error occurred.  Firmware-based notification relies on the
@@ -109,11 +109,11 @@ information is assembled and passed to system software~\cite{Gottscho:2017:Measu
 To measure the system impacts of the memory decoding and logging overheads, we
 use the \selfish~\cite{Hoefler:2010:Characterizing} system noise measurement
 microbenchmark. \selfish tracks the periods of time (\emph{detours}) when the CPU is
-taken from the application to perform system tasks, by continuously reading the processor 
-timestamp counter (TSC)~\cite{IntelGuide}.  When the counter interval exceeds a user-defined
-threshold~\footnote{For the data presented in this section, we used 150 nanoseconds}, the time 
-and duration
-of this detour is recorded.
+taken from the application to perform system tasks.  It detects detours by continuously reading 
+the processor timestamp counter (TSC)~\cite{IntelGuide}.  When the counter interval exceeds a 
+user-defined threshold,~\footnote{For the data presented in this section, we used 150 nanoseconds} 
+the time and duration of this detour is recorded.  By running \selfish while we inject
+errors using EINJ we can measure the time required to recover from a correctable error.
 
 \subsection{Simulating Correctable Overheads}
 
@@ -128,14 +128,14 @@ correctable error mitigation activities on the performance of real applications.
 %for real applications via their message traces.
 
 Our simulation-based approach models correctable error mitigation activities as
-CPU detours: periods of time during which the CPU is taken from the application
-and used to compute and commit checkpoint data.  This approach allows a level of
+CPU detours: periods of time during which application progress is blocked correctable
+error recovery.  This approach allows a level of
 fidelity and control not always possible in implementation-based approaches. It
 also allows us to examine simulated systems much larger than those generally
 available.
 
 Our simulation framework is based on the freely available
-\LogGOPSim~\cite{Hoefler:2010:LogGOPSim} and the tool chain provided  by Levy et
+\LogGOPSim~\cite{Hoefler:2010:LogGOPSim} and the tool chain described by Levy et
 al.~\cite{Levy2013UsingSimulation}.  \LogGOPSim uses the LogGOPS model, an
 extension of the well-known LogP model~\cite{Culler:1993:LogP}, to account for
 the temporal cost of communication events.  An application's communication
@@ -181,35 +181,37 @@ LogGOPS parameter & Cray XC40 \\
 \subsection{Simulation Setup and Repeatability}
 
 To generate the data presented in this paper, we collected execution traces for
-128 node runs for each applications described in \Cref{tab:app_desc} system.  We
-simulated the collected native traces~\footnote{All traces from non-export
-controlled application can found online, details in \Cref{sec:appendix}} with
-\LogGOPSim using parameters found in \Cref{tab:logp} which roughly correspond to
-a Cray XC40 architecture, a modern leadership class system. We then verified
-that the simulator accurately reproduces (within 6\%) the execution time on the
-respective system.
+128 process (125 process for MICL) runs for each of the workloads described in 
+\Cref{tab:app_desc} system.  We used these traces~\footnote{All traces from non-export
+controlled workloads can found online, details in \Cref{sec:appendix}} to simulate
+the execution of the application when we introduce correctable errors.  We configured 
+\LogGOPSim to use the network parameters listed in \Cref{tab:logp}.  These values 
+were collected on a Cray XC40 system.  \sll{Do we have more details?  Apps?  Can we cite 
+something and not put it in the first person?}  We then verified that the simulator accurately 
+reproduces (within 6\%) the execution time on the respective system.
 
-We model correctable failures using the OS noise injection functionality of
-\LogGOPSim.  Using the error injection interface described previously, we
-characterize the cost of correctable logging and decoding under a number
-different scenarios.  Using costs measure in this work as well as costs
-detailed in previous works~\cite{Gottscho:2017:Measuring} along with previously
-published DRAM correctable error
-rates~\cite{Li10,Hwang12,Sridharan13,Bautista-Gomez:2016:Unprotected}, we create
-OS \emph{traces}~\footnote{Correctable error noise traces are also available
-online, details in \Cref{sec:appendix}} that simulate the cost of correctables
-while running the application trace.  Therefore, processes experiencing a
-correctable error will be appropriately delayed when injected along with any
-communicating processes, as detailed in \Cref{fig:propagation}.
+We model correctable errors using an extension of the OS noise injection functionality provided
+by \LogGOPSim.  Our extension programmatically injects detours that represent correctable errors.
+The timing of the correctable error is determined statistically using random numbers drawn from 
+an exponential distribution.  The mean of the distribution (i.e., the MTBF of correctable errors)
+is based on data regarding the frequency of correctable errors in existing publications, 
+\emph{see e.g.},~\cite{Li10,Hwang12,Sridharan13,Bautista-Gomez:2016:Unprotected}.
+The duration of the detour is determined by the amount of time required 
+to recover from a correctable error.   For the experiments in this paper, we rely on empirical results 
+described in this paper (\emph{see} \refsec{sec:results:dram_correctable}) and data published 
+elsewhere~\cite{Gottscho:2017:Measuring} for these values.  
+Application processes are delayed appropriately when a simulated correctable error occurs.
+Delays that occur on one application process have the potential to propagate along
+communication dependencies and introduce delays in other processes, \emph{cf.} \Cref{fig:propagation}.
 
-We examine the performance of a number of HPC workloads.  These workloads,
+We examine the performance of seven HPC workloads.  These workloads,
 described in \Cref{tab:app_desc}, include three important DOE production
 applications (LAMMPS, CTH, and SPARC), an important HPC benchmark (HPCG), a
 proxy application (LULESH) from the Department of Energy's Exascale Co-Design
 Center for Materials in Extreme Environments~(ExMatEx), a scientific code used
 to study the behavior of subatomic particles~(MILC), and a
-mini-application~(miniFE) from Sandia's Mantevo suite.  This is a diverse set of
-workloads that captures a wide range of computational methods and application
+mini-application~(miniFE) from Sandia's Mantevo suite.  This diverse set of
+workloads captures a wide range of computational methods and application
 behaviors.  It additionally captures a significant cross-section of the
 scalable, high-performance applications that are run on current extreme-scale
 systems as well as workloads that represent the computational patterns that are
