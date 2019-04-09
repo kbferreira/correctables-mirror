@@ -62,25 +62,24 @@ correct operation can no longer be guaranteed.  Recovering from a fatal error ty
 requires a full system halt and a reboot.
 
 Recent research has largely focused on uncorrectable and fatal errors: errors
-that require applications to be restarted.  However, the impacts of the most common
-type of errors in large-scale systems, correctable errors, have largely been overlooked. An
-analysis of failures on recent leadership-class systems shows that the
-correctable failure rates vary from a factor of
-8~\cite{siddiqua:2017:lifetime,levy:2018:lessons} to a factor of
-20~\cite{meza:2015:revisiting} times more frequent than uncorrectable errors.
-\sll{Can we say this?  Isn't this getting at the data that AMD required us to remove?}
-Correctable errors are typically handled at a hardware level and are largely invisible 
-to the application.  While the application can continue to make progress despite the
-presence of correctable errors (i.e. restarting the application is unnecessary), the 
-time required to correct and log these errors has the potential to impact application
-performance by delaying application computation. These CEs can be transient,
-generating only one or a small handful of error events on a node, or can be
-persistent and generate in some cases millions of error events.  \sll{Struggling with
-the significance of the difference between transient and persistent CEs.}  These
+that require applications to be restarted.  However, the impacts of the most
+common type of errors in large-scale systems, correctable errors, have largely
+been overlooked. An analysis of failures on recent leadership-class systems
+shows that the correctable failure rates are 20 times higher than uncorrectable
+errors~\cite{meza:2015:revisiting}.  Correctable errors are typically handled at
+a hardware level and are largely invisible to the application.  While the
+application can continue to make progress despite the presence of correctable
+errors (i.e. restarting the application is unnecessary), the time required to
+correct and log these errors has the potential to impact application performance
+by delaying application computation. These CEs can be transient, generating only
+one or a small handful of error events on a node, or can be persistent and
+generate in some cases millions of error events.  \sll{Struggling with the
+significance of the difference between transient and persistent CEs.} These
 \emph{bursty} CE events can lead to significant application slowdowns even on
-current systems~\cite{BURSTY}.  \sll{\emph{bursty} still feels out of place to me.  Fundamentally,
-we only care about rates, not about whether there are ``bursts'' of errors.  It's also not
-clear to me from this paragraph what we mean by ``bursty''.}
+current systems~\cite{BURSTY}.  \sll{\emph{bursty} still feels out of place to
+me.  Fundamentally, we only care about rates, not about whether there are
+``bursts'' of errors.  It's also not clear to me from this paragraph what we
+mean by ``bursty''.}
 
 \input{propagation-fig}
 
