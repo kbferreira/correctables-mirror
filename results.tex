@@ -20,17 +20,19 @@ of the ECC code to correct), logging/decoding in the OS, and logging/decoding in
 firmware.
 
 To carry out this testing, we use the \blake system located at \detail{Sandia
-National Laboratories}.  \blake is 48 node Intel Skylake system connected by
-\kbf{ADD network detail}.  Each node consists of 4, 24 core, 2.1GHz Intel
-Skylake processors (a total of 96 cores/node) and 175GB of DDR4 DRAM per node.
+National Laboratories}.  \blake is 48-node Intel Skylake system with an 
+Intel OmniPath interconnect network.  Each node consists of 4 sockets.  Each 
+socket is occupied by a 24-core, 2.1GHz Intel
+Skylake processor (a total of 96 cores/node) and 175GB of DDR4 DRAM per node.
 This system is running Red Hat Enterprise Linux Server release 7.4 and a Linux
 3.10.693 version kernel.
 
-To inject correctable DRAM errors we use the Error INJection (EINJ) facility of
-the ACPI Platform Error Interface (APEI)~\cite{ACPISpec} described previously.
-We also use the \selfish operating system noise (or \emph{jitter}) measurement
-microbenchmark~\footnote{See appendix \Cref{sec:appendix} for further details on
-these utilities}.
+%To inject correctable DRAM errors we use the Error INJection (EINJ) facility of
+%the ACPI Platform Error Interface (APEI)~\cite{ACPISpec} described in 
+%\refsec{sec:approach:apei}.
+%We also use the \selfish operating system noise (or \emph{jitter}) measurement
+%microbenchmark~\footnote{See appendix \Cref{sec:appendix} for further details on
+%these utilities}.
 
 \begin{figure*}
 \centering{
@@ -68,6 +70,8 @@ these utilities}.
 \label{fig:baselines}
 \end{figure*}
 
+In this section, we collect empirical data on the time required to recover from
+correctable errors as described in \reftwosec{sec:approach:apei}{sec:approach:logging}.
 As we are interested in measuring the noise signature of DRAM correctables, we
 first must measure the native noise signature of the system, as well as
 ensuring the error injection utility does not impart additional OS noise costs
