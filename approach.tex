@@ -25,7 +25,7 @@ injection table~(EINJ).
 
 EINJ provides a platform-independent interface that enables the operating system to
 inject hardware errors to the platform without requiring platform-specific software 
-support. The primary objective of this mechanism is to validate an operating system's 
+support. The primary objective of this mechanism is to validate operating system 
 Reliability, Availability, and Serviceability~(RAS) features.  The ACPI specification 
 defines several error types for EINJ.  The supported errors are summarized in \Cref{tab:einj}.  
 EINJ is not supported on every platform; it requires support from the host processor, 
@@ -66,9 +66,9 @@ Error Type Value & Error Description \\
 \sll{KBF: please make sure that I've got this right.}\\
 Using the EINJ table to inject errors on Linux-based systems is accomplished by writing to virtual 
 files in the sysfs.\footnote{All of the relevant virtual files are in the \texttt{/sys/kernel/debug/apei/einj}
-directory.  Additional information about Linux EINJ support, including a simple example, is available
-in the Linux kernel documentation, \emph{see} \cite{einj_web}.} Using this interface, the user can 
-specify the error type and target memory address, and trigger the injection of the error.
+directory.  Additional information about Linux EINJ support, including a simple example of injecting an
+error, is available in the Linux kernel documentation, \emph{see} \cite{einj_web}.} Using this interface, 
+the user can specify the error type and target memory address, and trigger the injection of the error.
 
 \subsection{Memory Failure Logging}
 
@@ -80,42 +80,39 @@ codes~(ECC).  When the memory controller detects a memory error, it attempts to
 use the ECC to correct the error.  If it is able to correct the error, the
 error is recorded as a \emph{correctable error}~(CE).  If it is unable to
 correct the error, the error is recorded as a \emph{detected, uncorrectable
-error}~(DUE).  Correctable errors are recorded in registers provided by the x86
-Machine Check Architecture~(MCA)~\cite{AMD,IntelGuide}.  The contents of these
-registers are polled periodically and written to the console log.
-Uncorrectable errors are recorded in an event log after the node is rebooted
-due to the occurrence of an uncorrected error.  For both correctable and
-uncorrectable errors, detailed information about each error can be recorded.
+error}~(DUE).  On x86-based processors, correctable errors are recorded in 
+registers provided by the x86 Machine Check Architecture~(MCA)~\cite{AMD,IntelGuide}.  
+These registers are polled periodically and their contents are used to record
+detailed information about the occurrence of the error is written to the console log.
 This information includes the physical address where the error occurred and ECC
 syndrome data that describes the cause of the error.  Decoding the recorded
 information about each error allows us to identify the physical location of
 each logged error, but this decoding process takes time, perturbing application
 performance.
 
-For correctable errors, there are two ways that the processor can be notified of
-the error: software-based and firmware-based.  In the case of software-based
-notification, a Corrected Machine Check Interrupt
+For correctable errors, there are two types of processor notification: software-based 
+and firmware-based.  In the case of software-based notification, a Corrected Machine Check Interrupt
 (CMCI)~\cite{IntelGuide,Gottscho:2017:Measuring} is generated which records
-the DRAM error and the time of its occurrence. In this case, it may be difficult
+the DRAM error and the time of its occurrence.  However, it may be difficult
 to determine the precise DRAM location of an error because of complexities related
 to memory organization~\cite{Gottscho:2017:Measuring}.  As a result, mitigating
 failures with memory page retirement~\cite{Tang:2006:Assessment} may not always
 be possible with CMCI-based reporting.  With firmware-based notification, the
-information recorded when the error occurs allows the physical address and the
-specific DRAM device to be determined.  Firmware-based notification relies on the
+information recorded when the error occurs includes the physical address and the
+specific DRAM device where the error occurred.  Firmware-based notification relies on the
 Enhanced Machine Check Architecture (EMCA)~\cite{MCAEnhancements}.  While this
 method allows for precise identification of the source of the error, it is very
 expensive.  It requires the system to enter System Management Mode~(SMM) which halts
-all forward progress while the memory configuration information is assembled and
-passed to system software~\cite{Gottscho:2017:Measuring}. SMM mode is expensive
-as it halts progress on \emph{all} cores on a node until the SMM mode is left.
+all forward progress on \emph{all} cores of the processor while the memory configuration 
+information is assembled and passed to system software~\cite{Gottscho:2017:Measuring}. 
 
 To measure the system impacts of the memory decoding and logging overheads, we
 use the \selfish~\cite{Hoefler:2010:Characterizing} system noise measurement
-microbenchmark. \selfish tracks chunks of time taken away from the CPU for
-system tasks (termed detours), by continuously reading the processor timestamp
-counter (TSC)~\cite{IntelGuide}.  When the counter has reading has exceeded a
-certain threshold~\footnote{In our case, 150 nanoseconds}, the time and duration
+microbenchmark. \selfish tracks the periods of time (\emph{detours}) when the CPU is
+taken from the application to perform system tasks, by continuously reading the processor 
+timestamp counter (TSC)~\cite{IntelGuide}.  When the counter interval exceeds a user-defined
+threshold~\footnote{For the data presented in this section, we used 150 nanoseconds}, the time 
+and duration
 of this detour is recorded.
 
 \subsection{Simulating Correctable Overheads}
